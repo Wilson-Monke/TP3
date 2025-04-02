@@ -1,8 +1,11 @@
-﻿
-#ifndef OCEAN_H
-#define OCEAN_H
+﻿#pragma once
 
-#include <stdlib.h> // useless?
+// for debug
+#include <stdlib.h> 
+#include <stdio.h>
+
+#include "util.h"
+#include "utilitaire_affichage.h"
 
 #define HAUTEUR 60
 #define LARGEUR 120
@@ -18,23 +21,15 @@ typedef struct {
     void *animal;      // Pointeur générique à un animal à cette case, sinon NULL
 } t_case;
 
-// Structure de l'oc�an qui contient une grille et des listes d'animaux
+// Taleau 2d qui contient des case(contenu et pointeur vers l'animal)
 typedef t_case t_ocean[HAUTEUR][LARGEUR];
 
 
-// Initialisation de l'oc�an
-void initialiser_ocean(t_ocean* ocean);
+// Mettre toute les cases à contenu VIDE et animal NULLE
+void vider_ocean(t_ocean ocean);
 
-// Ajout d'un animal dans l'oc�an
-void ajouter_animal(t_ocean* ocean, int x, int y, t_contenu type);
+// Obtient le contenu d'une case à la position x y
+int get_contenu_case(t_ocean ocean, int x, int y, t_contenu * contenuCase);
 
-// D�placement des animaux dans l'oc�an
-void deplacer_animaux(t_ocean* ocean);
 
-// Suppression des animaux morts
-void nettoyer_ocean(t_ocean* ocean);
-
-// Affichage de l'oc�an
-void afficher_ocean(const t_ocean* ocean);
-
-#endif // OCEAN_H
+int get_ptrAnimal_case(t_ocean ocean, int x, int y, t_contenu ptrAnimal);
