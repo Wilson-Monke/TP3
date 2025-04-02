@@ -8,16 +8,6 @@ int main()
     t_contenu test_contenu;
     int test;
 
-    
-
-    for (int i = 0; i < HAUTEUR; i++) 
-    {
-        for (int j = 0; j < LARGEUR; j++) 
-        {
-          /*  printf("ocean[%d][%d] -> contenu: %d, animal: %p\n",
-                i, j, ocean[i][j].contenu, ocean[i][j].animal);*/
-        }
-    }
 
     ocean[0][0].animal = &test;
     ocean[0][0].contenu = POISSON;
@@ -32,7 +22,7 @@ int main()
     default:    break;
     }
 
-    get_ptrAnimal_case(ocean, 0, 0, ());
+    //get_ptrAnimal_case(ocean, 0, 0, ());
 
 	return 0;
 }
