@@ -2,6 +2,6 @@
 
 int main()
 {
-	int test = 0;//adjklhgfsdkjhfgsdfkjhg
+	int test = 0;
 	return 0;
 }

@@ -1,36 +1,26 @@
-﻿#pragma once
-
-
+﻿
 #ifndef OCEAN_H
 #define OCEAN_H
 
-#include "animal.h"
-#include "Liste.h"
-#include <list>
+#include <stdlib.h> // useless?
 
 #define HAUTEUR 60
 #define LARGEUR 120
 
+typedef enum { HAUT, HAUT_DR, DROITE, BAS_dR, BAS, BAS_G, GAUCHE, HAUT_G } t_direction;
+
 // �num�ration pour une case de l'oc�an
-typedef enum {
-    VIDE,
-    POISSON,
-    REQUIN
-} t_contenu;
+typedef enum { VIDE,POISSON, REQUIN } t_contenu;
 
 // Structure qui repr�sente une case de l'oc�an
 typedef struct {
-    t_contenu type;
-    // Pointeur vers un poisson ou requin
-    void* animal;
+    t_contenu contenu; // VIDE, POISSON ou REQUIN
+    void *animal;      // Pointeur générique à un animal à cette case, sinon NULL
 } t_case;
 
 // Structure de l'oc�an qui contient une grille et des listes d'animaux
-typedef struct {
-    t_case grille[HAUTEUR][LARGEUR];
-    liste poissons;
-    liste requins;
-} t_ocean;
+typedef t_case t_ocean[HAUTEUR][LARGEUR];
+
 
 // Initialisation de l'oc�an
 void initialiser_ocean(t_ocean* ocean);
