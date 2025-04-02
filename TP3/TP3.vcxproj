@@ -129,12 +129,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="animal.c" />
-    <ClCompile Include="Liste.c" />
-    <ClCompile Include="Main.c" />
-    <ClCompile Include="ocean.c" />
-    <ClCompile Include="poisson.c" />
-    <ClCompile Include="requin.c" />
+    <ClCompile Include="animal.cpp" />
+    <ClCompile Include="Liste.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="ocean.cpp" />
+    <ClCompile Include="poisson.cpp" />
+    <ClCompile Include="requin.cpp" />
     <ClCompile Include="util.cpp" />
     <ClCompile Include="utilitaire_affichage.cpp" />
     <ClCompile Include="winBGIm.cpp" />

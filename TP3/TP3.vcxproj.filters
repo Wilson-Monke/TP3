@@ -27,13 +27,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.c">
+    <ClCompile Include="Main.cpp">
       <Filter>Source Files\src</Filter>
     </ClCompile>
-    <ClCompile Include="animal.c">
+    <ClCompile Include="animal.cpp">
       <Filter>Source Files\src</Filter>
     </ClCompile>
-    <ClCompile Include="Liste.c">
+    <ClCompile Include="Liste.cpp">
       <Filter>Source Files\src</Filter>
     </ClCompile>
     <ClCompile Include="util.cpp">
@@ -45,13 +45,13 @@
     <ClCompile Include="winBGIm.cpp">
       <Filter>Source Files\lib</Filter>
     </ClCompile>
-    <ClCompile Include="ocean.c">
+    <ClCompile Include="ocean.cpp">
       <Filter>Source Files\src</Filter>
     </ClCompile>
-    <ClCompile Include="requin.c">
+    <ClCompile Include="requin.cpp">
       <Filter>Source Files\src</Filter>
     </ClCompile>
-    <ClCompile Include="poisson.c">
+    <ClCompile Include="poisson.cpp">
       <Filter>Source Files\src</Filter>
     </ClCompile>
   </ItemGroup>

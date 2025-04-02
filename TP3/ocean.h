@@ -1,5 +1,5 @@
 ﻿#pragma once
-#pragma once
+
 
 #ifndef OCEAN_H
 #define OCEAN_H
