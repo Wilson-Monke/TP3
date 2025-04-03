@@ -33,9 +33,6 @@
     <ClCompile Include="animal.cpp">
       <Filter>Source Files\src</Filter>
     </ClCompile>
-    <ClCompile Include="Liste.cpp">
-      <Filter>Source Files\src</Filter>
-    </ClCompile>
     <ClCompile Include="util.cpp">
       <Filter>Source Files\lib</Filter>
     </ClCompile>
@@ -54,6 +51,9 @@
     <ClCompile Include="poisson.cpp">
       <Filter>Source Files\src</Filter>
     </ClCompile>
+    <ClCompile Include="Liste.cpp">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="util.h">
@@ -65,13 +65,7 @@
     <ClInclude Include="winBGIm.h">
       <Filter>Header Files\lib</Filter>
     </ClInclude>
-    <ClInclude Include="main.h">
-      <Filter>Header Files\src</Filter>
-    </ClInclude>
     <ClInclude Include="animal.h">
-      <Filter>Header Files\src</Filter>
-    </ClInclude>
-    <ClInclude Include="Liste.h">
       <Filter>Header Files\src</Filter>
     </ClInclude>
     <ClInclude Include="ocean.h">
@@ -83,8 +77,8 @@
     <ClInclude Include="poisson.h">
       <Filter>Header Files\src</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="main.ch" />
+    <ClInclude Include="Liste.h">
+      <Filter>Header Files\src</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

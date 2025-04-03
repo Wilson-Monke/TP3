@@ -15,16 +15,11 @@ void vider_ocean(t_ocean ocean)
  }
 
 
-int get_contenu_case(t_ocean ocean, int x, int y, t_contenu *contenuCase)
+t_contenu get_contenu_case(t_ocean ocean, int x, int y)
 {
-    if (x < 0 || x >= LARGEUR || y < 0 || y >= LARGEUR) return 0;
+    if (x < 0 || x >= LARGEUR || y < 0 || y >= LARGEUR) return VIDE;
 
-    if (ocean[y][x].contenu != VIDE) 
-    {
-        *contenuCase = ocean[y][x].contenu;
-
-        return 1;
-    } 
+    return ocean[y][x].contenu;
 }
 
 int get_ptrAnimal_case(t_ocean ocean, int x, int y, int ptrAnimal)

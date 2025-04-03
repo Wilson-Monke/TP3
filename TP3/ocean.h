@@ -10,7 +10,7 @@
 #define HAUTEUR 60
 #define LARGEUR 120
 
-typedef enum { HAUT, HAUT_DR, DROITE, BAS_dR, BAS, BAS_G, GAUCHE, HAUT_G } t_direction;
+typedef enum { HAUT, HAUT_D, DROITE, BAS_D, BAS, BAS_G, GAUCHE, HAUT_G } t_direction;
 
 // �num�ration pour une case de l'oc�an
 typedef enum { VIDE,POISSON, REQUIN } t_contenu;
@@ -29,7 +29,7 @@ typedef t_case t_ocean[HAUTEUR][LARGEUR];
 void vider_ocean(t_ocean ocean);
 
 // Obtient le contenu d'une case à la position x y
-int get_contenu_case(t_ocean ocean, int x, int y, t_contenu * contenuCase);
+t_contenu get_contenu_case(t_ocean ocean, int x, int y);
 
 
 int get_ptrAnimal_case(t_ocean ocean, int x, int y, t_contenu ptrAnimal);
