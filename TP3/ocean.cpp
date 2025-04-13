@@ -5,6 +5,7 @@
 
 #define COULEUR_POISSON BLUE
 #define COULEUR_REQUIN	RED
+#define COULEUR_VIDE BLACK
 
 // Initialisation de l'oc�an
 void vider_ocean(t_ocean ocean)
@@ -283,6 +284,10 @@ void dessiner_ocean(t_ocean ocean)
 			else if (get_contenu_case(ocean, j, i) == REQUIN)
 			{
 				afficher_case(i, j, HAUTEUR, LARGEUR, COULEUR_REQUIN);
+			}
+			else if (get_contenu_case(ocean, j, i) == VIDE)
+			{
+				afficher_case(i, j, HAUTEUR, LARGEUR, BLACK);
 			}
 		}
 	}

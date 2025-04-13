@@ -1,4 +1,5 @@
 ﻿#pragma once
+#define _CRT_SECURE_NO_WARNINGS
 #include "main.h"
 /******************************************************************************/
 /*  main.h                                                                 */
@@ -11,10 +12,10 @@
 /*											CONSTANTES												 */
 /*---------------------------------------------------------------------------------------------------*/
 // Entr�e utilisateur
-#define MODE_AFFICHAGE	'O'
+#define MODE_AFFICHAGE	'o'
 #define MODE_ECRI_FICH	'N'
 #define TOUCHE_ESC		27
-#define NB_ANIMAUX_VLU	300	
+#define NB_ANIMAUX_VLU	30	
 
 // Couleurs
 #define COULEUR_ROUGE       12
@@ -25,33 +26,31 @@
 int main(void)
 {
 	init_alea();
-	char saisieUtilisateur = '0';
+	char saisieUtilisateur;
 	int mode = 0;
 	t_ocean* ocean = (t_ocean*)calloc(LARGEUR * HAUTEUR, sizeof(t_ocean));
 	t_liste* liste_requin = init_liste();
 	t_liste* liste_poisson = init_liste();
-
-
-	srand(time(NULL)); // Init randomisation
+	
 
 	printf("Voulez-vous avec affichage? (O)ui/(N)on	");
 	mode = 1;
-	//scanf_s("%c", &saisieUtilisateur);
+	scanf("%c", &saisieUtilisateur);
 	
-	//switch (saisieUtilisateur)
-	//{
-	//case MODE_AFFICHAGE:
-	//	mode = 1;
-	//	break;
+	switch (saisieUtilisateur)
+	{
+	case MODE_AFFICHAGE:
+		mode = 1;
+		break;
 
-	//case MODE_ECRI_FICH:
-	//	mode = 2;
-	//	break;
+	case MODE_ECRI_FICH:
+		mode = 2;
+		break;
 
-	//default:
-	//	mode = NULL;
-	//	break;
-	//}
+	default:
+		mode = NULL;
+		break;
+	}
 
 	if (mode == 1)
 	{
@@ -72,27 +71,22 @@ int main(void)
 				}
 			}
 			dessiner_ocean(*ocean);
-			iteration++;
 			afficher_infos(iteration, nb_animaux(liste_poisson), nb_animaux(liste_requin));
 			algorithme(*ocean, liste_poisson, liste_requin, iteration, mode);
-			delai_ecran(1);//delais de 0.1 sec pour observer les elements
+			delai_ecran(1000);//delais de 0.1 sec pour observer les elements
+			iteration++;
 		}
 	}
-
-
-
-
-
 }
 
 
 void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_requin, int temps, int mode)
 {
-
+	//identifie & supprime les poissons manges ou trop vieux
 	checklist(ocean, liste_poisson);
 	courant_tete_liste(liste_poisson);
 
-	for (int i = 0;i < nb_animaux(liste_poisson);i++) //identifie & supprime les poissons manges ou trop vieux
+	for (int i = 0;i < nb_animaux(liste_poisson);i++) 
 	{
 		if (se_fait_manger(ocean, liste_poisson->courant))
 		{
@@ -109,9 +103,11 @@ void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_requin, in
 	checklist(ocean, liste_poisson);
 
 
+
+	//identifie & supprime requins trop vieux ou morts de faim
 	checklist(ocean, liste_requin);
 	courant_tete_liste(liste_requin);
-	for (int j = 0;j < nb_animaux(liste_requin);j++) //identifie & supprime requins trop vieux ou morts de faim
+	for (int j = 0;j < nb_animaux(liste_requin);j++) 
 	{
 		if (liste_requin->courant->info->age > MAX_AGE_REQUIN || liste_requin->courant->info->age <= 0)
 		{
@@ -121,10 +117,12 @@ void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_requin, in
 	}
 	checklist(ocean, liste_requin);
 
+
+	//identifie puis deplace ou genere un nouveau poisson
 	checklist(ocean, liste_poisson);
 	t_info_adj* info_adj_p = NULL;
 	courant_tete_liste(liste_poisson);
-	for (int k = 0;k < nb_animaux(liste_poisson);k++) //identifie puis deplace ou genere un nouveau poisson
+	for (int k = 0;k < nb_animaux(liste_poisson);k++) 
 	{
 		info_adj_p = case_adj_vides(ocean, liste_poisson->courant->info->posx, liste_poisson->courant->info->posy);
 		if (info_adj_p->plein == 0)
@@ -150,11 +148,13 @@ void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_requin, in
 	checklist(ocean, liste_poisson);
 
 
+
+	//identifie puis deplace ou genere un nouveau requin
 	checklist(ocean, liste_requin);
 
 	t_info_adj* info_adj_r = NULL;
 	courant_tete_liste(liste_requin);
-	for (int k = 0;k < nb_animaux(liste_requin);k++) //identifie puis deplace ou genere un nouveau requin
+	for (int k = 0;k < nb_animaux(liste_requin);k++) 
 	{
 		info_adj_r = case_adj_vides(ocean, liste_requin->courant->info->posx, liste_requin->courant->info->posy);
 		if (info_adj_r->plein == 0)
@@ -246,22 +246,7 @@ void checklist(t_ocean ocean, t_liste* liste)
 		prochain_noeud(liste);
 	}
 
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

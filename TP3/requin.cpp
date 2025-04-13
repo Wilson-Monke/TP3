@@ -104,7 +104,7 @@ int ajout_bb_r(t_liste* liste, t_ocean ocean, t_noeud* r_parent)
 void retirer_requin(t_liste* liste, t_ocean ocean) {
 
 	effacer_contenu(ocean, liste->courant->info->posx, liste->courant->info->posy);
-	retire_noeud(liste);//fonction qui retire le noeud courant de la liste
+	retire_noeud(liste);
 }
 
 
