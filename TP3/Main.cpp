@@ -58,7 +58,6 @@ int main(void)
 		int iteration = 0;
 		//vider structures de donnees????????????
 		init_liste_p(liste_poisson, *ocean, nb_p);
-		afficher_liste(liste_poisson);
 		init_liste_r(liste_requin, *ocean, nb_r);
 		init_graphe(LARGEUR, HAUTEUR);
 		init_zone_environnement(HAUTEUR, LARGEUR);
@@ -240,7 +239,7 @@ void requin_mange(t_ocean ocean, t_noeud* poisson)
 
 void checklist(t_ocean ocean, t_liste* liste)
 {
-
+	afficher_liste(liste);
 	/*courant_tete_liste(liste);
 	void* ptr_animal = NULL;
 
