@@ -1,0 +1,4 @@
+﻿  poisson.cpp
+C:\Users\PC\source\repos\Lucassun420\TP3\TP3\poisson.cpp(209,1): warning C4715: 'ajout_bb_p' : les chemins de contrôle ne retournent pas tous une valeur
+C:\Users\PC\source\repos\Lucassun420\TP3\TP3\poisson.cpp(250,1): warning C4172: retourne l'adresse d'une variable locale ou : case_adj temporaire
+  TP3.vcxproj -> C:\Users\PC\Source\Repos\Lucassun420\TP3\x64\Debug\TP3.exe
