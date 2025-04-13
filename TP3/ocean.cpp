@@ -54,6 +54,7 @@ int effacer_contenu(t_ocean ocean, int posx, int posy)
 {
 	ocean[posy][posx].contenu = VIDE;
 	ocean[posy][posx].animal = NULL;
+	afficher_case(posx, posy, HAUTEUR, LARGEUR, BLACK);
 	return 1;
 
 }
@@ -285,10 +286,7 @@ void dessiner_ocean(t_ocean ocean)
 			{
 				afficher_case(i, j, HAUTEUR, LARGEUR, COULEUR_REQUIN);
 			}
-			else if (get_contenu_case(ocean, j, i) == VIDE)
-			{
-				afficher_case(i, j, HAUTEUR, LARGEUR, BLACK);
-			}
+		
 		}
 	}
 }

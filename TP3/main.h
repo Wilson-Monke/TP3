@@ -32,5 +32,5 @@ void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_requin, in
 */
 void checklist(t_ocean ocean, t_liste* liste);
 
-
+void afficher_liste(t_liste* liste);
 #endif
