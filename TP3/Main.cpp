@@ -1,114 +1,150 @@
 ﻿#pragma once
-#define _CRT_SECURE_NO_WARNINGS
-#include "main.h"
 /******************************************************************************/
-/*  main.h                                                                 */
+/*  main.cpp                                                                 */
 /*  Fichier d'en t�te de l'algorithme   */
-/*  Conception : Lucas Loge & Anthony Rosa                                              */
+/*  Conception : Lucas Loge & Anthony Rosa                      */
 /************************/
+#include "main.h"
 
-
-/*---------------------------------------------------------------------------------------------------*/
-/*											CONSTANTES												 */
-/*---------------------------------------------------------------------------------------------------*/
-// Entr�e utilisateur
-#define MODE_AFFICHAGE	'o'
-#define MODE_ECRI_FICH	'N'
-#define TOUCHE_ESC		27
-#define NB_ANIMAUX_VLU	300	
-
-// Couleurs
-#define COULEUR_ROUGE       12
-#define COULEUR_VERT		10
-#define COULEUR_VIOLET		13
-#define COULEUR_DEFAUT      7   //BLANC
 
 int main(void)
 {
 	init_alea();
-	char saisieUtilisateur = '0';
-	int mode = 0;
-	t_ocean* ocean = (t_ocean*)calloc(LARGEUR * HAUTEUR, sizeof(t_ocean));
+	
+	t_ocean* ocean = (t_ocean*)calloc(LARGEUR_OCEAN * HAUTEUR_OCEAN, sizeof(t_ocean));
 	t_liste* liste_requin = init_liste();
 	t_liste* liste_poisson = init_liste();
-	
+	t_stats stats;
 
-	printf("Voulez-vous avec affichage? (O)ui/(N)on	");
-	mode = 1;
-	//scanf("%c", &saisieUtilisateur);
-	
-	//switch (saisieUtilisateur)
-	//{
-	//case MODE_AFFICHAGE:
-	//	mode = 1;
-	//	break;
+	int mode = MODE_GRAPHIQUE;
+	int sortieBoucle = 0;
+	int iteration = 0;
 
-	//case MODE_ECRI_FICH:
-	//	mode = 2;
-	//	break;
+	stats.nb_poisson_initial = 10/*NB_ANIMAUX_VLU * POURCENTAGE_POISSON*/;
+	stats.nb_requin_initial = 2/*NB_ANIMAUX_VLU * POURCCENTAGE_REQUIN*/;
 
-	//default:
-	//	mode = NULL;
-	//	break;
-	//}
+	init_liste_p(liste_poisson, *ocean, stats.nb_poisson_initial);
+	init_liste_r(liste_requin, *ocean, stats.nb_requin_initial);
 
-	if (mode == 1)
+
+	printf("Voulez-vous avec affichage? (O)ui/(N)on");
+	/*
+	while(mode != MODE_GRAPHIQUE || mode != MODE_ECRI_FICH)
 	{
-		int nb_p = (NB_ANIMAUX_VLU * 0.8), nb_r = (NB_ANIMAUX_VLU * 0.2);
-		int iteration = 0;
-		//vider structures de donnees????????????
-		init_liste_p(liste_poisson, *ocean, nb_p);
-		init_liste_r(liste_requin, *ocean, nb_r);
-		init_graphe(LARGEUR, HAUTEUR);
-		init_zone_environnement(HAUTEUR, LARGEUR);
-		while (saisieUtilisateur != TOUCHE_ESC) // Tant qu'on ne p�se pas <ESC>
+		scanf(%c, &saisieUtilisateur);
+
+		if(to_lower(saisieUtilisateur) == 'o')
 		{
-			if (_kbhit())  // Si une touche est press�e
+			printf("\n Mode Graphique selectionner");
+		}else if(to_lower(saisieUtilisateur) == 'n')
+		{
+			printf("\n Mode Graphique selectionner");
+		}
+	}
+	*/
+	printf("\n");
+
+
+	if (mode == MODE_GRAPHIQUE)
+	{	
+		init_graphe(LARGEUR_OCEAN, HAUTEUR_OCEAN);
+		init_zone_environnement(HAUTEUR_OCEAN, LARGEUR_OCEAN);
+		dessiner_ocean(*ocean);
+	}
+
+	while (!sortieBoucle)
+	{
+		if (mode == MODE_GRAPHIQUE)
+		{
+			if (touche_pesee())
 			{
-				if (_kbhit())  // Si une touche est press�e
+				if (obtenir_touche() == TOUCHE_ESC)
 				{
-					saisieUtilisateur = _getch(); // Obtenir la touche	
+					fermer_mode_graphique();
+					printf("\nTouche ESC appuyer, sortie du mode d'affichage graphique.\n");
+					sortieBoucle;
 				}
 			}
-			dessiner_ocean(*ocean);
 			afficher_infos(iteration, nb_animaux(liste_poisson), nb_animaux(liste_requin));
-			algorithme(*ocean, liste_poisson, liste_requin, iteration, mode);
-			delai_ecran(1000);//delais de 0.1 sec pour observer les elements
-			iteration++;
 		}
-		free_liste(liste_poisson);
-		free_liste(liste_requin);
-		free(ocean);
+		else // Mode fichier texte
+		{
+			// log from t_stats
+		}
+		
+		algorithme(*ocean, liste_poisson, liste_requin, iteration, mode);
+		delai_ecran(100);//delais de 0.1 sec pour observer les elements
+		iteration++;
 	}
+
+	free_liste(liste_poisson);
+	free_liste(liste_requin);
+	free(ocean);
+
+	//system("pause");
+	return EXIT_SUCCESS;
 }
 
 
-void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_requin, int temps, int mode)
+static void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_requin, int temps, int mode)
 {
-	//identifie & supprime les poissons manges ou trop vieux
-	checklist(ocean, liste_poisson);
-	courant_tete_liste(liste_poisson);
-
-	for (int i = 0;i < nb_animaux(liste_poisson);i++) 
+	//identifie & supprime les poissons mangées ou trop vieux
+	/*courant_tete_liste(liste_poisson);
+	int nbPoissons = nb_animaux(liste_poisson);
+	
+	for (int i = 0;i < nbPoissons;i++)
 	{
-		if (se_fait_manger(ocean, liste_poisson->courant))
+		// Se fait manger par un requin
+		if (requin_mange(ocean, liste_poisson->courant))
 		{
-			requin_mange(ocean, liste_poisson->courant);
 			retirer_poisson(liste_poisson, ocean);
+			printf("Poisson c'est fait manger!! dans l'algo\n!!!");
 		}
+		// Est-ce qu'il meurt de vieilleisse?
 		else if (liste_poisson->courant->info->age > MAX_AGE_POISSON)
 		{
+			// Oui
 			retirer_poisson(liste_poisson, ocean);
 		}
+		
+		prochain_noeud(liste_poisson); //Prochain poisson dans la liste
+	}
+	*/
 
+	// On traite tous les poisson
+	courant_tete_liste(liste_poisson);
+	int nbPoissons = nb_animaux(liste_poisson);
+
+	for (int k = 0;k < nbPoissons;k++)
+	{
+		deplace_poisson(liste_poisson->courant, ocean);
+		afficher_liste(liste_poisson);
+		//print_ocean(ocean);
+		print_poissons(ocean);
+		/*if (liste_poisson->courant->info->jrs_gest >= NB_JRS_GEST_POISSON)
+		{
+			//ajout_bb_p(liste_poisson, ocean, liste_poisson->courant);
+		}
+		else
+		{
+			deplace_poisson(liste_poisson->courant, ocean);
+			//afficher_liste(liste_poisson);
+		}
+		if (liste_poisson->courant->info->age >= NB_JRS_PUB_POISSON) 
+		{
+			liste_poisson->courant->info->jrs_gest++;
+			liste_poisson->courant->info->age++;
+		}
+		*/
 		prochain_noeud(liste_poisson);
 	}
-	checklist(ocean, liste_poisson);
 
 
+
+	/*
 
 	//identifie & supprime requins trop vieux ou morts de faim
-	checklist(ocean, liste_requin);
+	
 	courant_tete_liste(liste_requin);
 	for (int j = 0;j < nb_animaux(liste_requin);j++) 
 	{
@@ -118,11 +154,11 @@ void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_requin, in
 		}
 		prochain_noeud(liste_requin);
 	}
-	checklist(ocean, liste_requin);
+	
 
 
 	//identifie puis deplace ou genere un nouveau poisson
-	checklist(ocean, liste_poisson);
+	
 	t_info_adj* info_adj_p = NULL;
 	courant_tete_liste(liste_poisson);
 
@@ -135,13 +171,13 @@ void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_requin, in
 			if (liste_poisson->courant->info->jrs_gest >= NB_JRS_GEST_POISSON)
 			{
 				ajout_bb_p(liste_poisson, ocean, liste_poisson->courant);
-				checklist(ocean, liste_poisson);
+				
 			}
 			else
 			{
 				deplace_poisson(liste_poisson->courant, ocean);
 				//afficher_liste(liste_poisson);
-				checklist(ocean, liste_poisson);
+				
 			}
 			if (liste_poisson->courant->info->age >= NB_JRS_PUB_POISSON)
 				liste_poisson->courant->info->jrs_gest++;
@@ -151,12 +187,12 @@ void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_requin, in
 		}
 		prochain_noeud(liste_poisson);
 	}
-	checklist(ocean, liste_poisson);
+	
 
 
 
 	//identifie puis deplace ou genere un nouveau requin
-	checklist(ocean, liste_requin);
+	
 
 	t_info_adj* info_adj_r = NULL;
 	courant_tete_liste(liste_requin);
@@ -181,78 +217,39 @@ void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_requin, in
 		}
 		prochain_noeud(liste_requin);
 	}
-
+	*/
 }
 
 
-int se_fait_manger(t_ocean ocean, t_noeud* poisson)
+static int requin_mange(t_ocean ocean, t_noeud* poisson)
 {
-	t_info_adj* info_adj = case_adj_vides(ocean, poisson->info->posx, poisson->info->posy);
-	int manger = 0;//0 si pas de requin adj 1 si requin adj
+	t_noeud* requin = NULL; //ptr du requin qui mange 
+	//t_info_adj* info_adj = case_adj_vides(ocean, poisson->info->posx, poisson->info->posy);//poisson qui se fait manger
+	int pos_x_r = poisson->info->posx;
+	int pos_y_r = poisson->info->posy;
+	int manger = 0;
+	
 	for (int i = 0;i < 2;i++)
 	{
 		for (int j = 0;j < 2;j++)
 		{
 			if (i != 1 && j != 1) //ne regarde jamais la case du milieu
 			{
-				if (info_adj->case_adj[i][j] == REQUIN)//si il y a un requin adj
-				{
-					manger = 1; //se fait manger
-					break;
-				}
-			}
-		}
-	}
-	if (manger != 1)
-		manger = 0;
-
-	return manger;
-}
-
-
-
-void requin_mange(t_ocean ocean, t_noeud* poisson)
-{
-	t_info_adj* info_adj = case_adj_vides(ocean, poisson->info->posx, poisson->info->posy);//poisson qui se fait manger
-	int pos_x_r = poisson->info->posx, pos_y_r = poisson->info->posy;
-	t_noeud* requin = NULL; //ptr du requin qui mange
-	for (int i = 0;i < 2;i++)
-	{
-		for (int j = 0;j < 2;j++)
-		{
-			if (i != 1 && j != 1) //ne regarde jamais la case du milieu
-			{
+				/*
 				if (info_adj->case_adj[i][j] == REQUIN) //si il y a un requin adj
 				{
-					pos_y_r += (i - 1);
-					pos_x_r += (j - 1);
+					requin = (t_noeud*)ocean[pos_y_r][pos_x_r].animal;
+					requin->info->energie_sante++;
+					manger = 1;
 					break;
-				}
+				}*/
 			}
 		}
 	}
 
-	requin = (t_noeud*)ocean[pos_y_r][pos_x_r].animal;
-	requin->info->energie_sante++;
-
+	return manger; // 0 se fait pas manger, 1 c'est fait manger.
 }
 
-void checklist(t_ocean ocean, t_liste* liste)
-{
-	afficher_liste(liste);
-	/*courant_tete_liste(liste);
-	void* ptr_animal = NULL;
-
-	while (liste->courant->next != NULL)
-	{
-		if (liste->courant != ocean[liste->courant->info->posy][liste->courant->info->posx].animal)
-		{
-			printf("ERREUR");
-		}
-		prochain_noeud(liste);
-	}*/
-
-}
 
 void afficher_liste(t_liste* liste) {
 	if (!liste || !liste->tete) {
@@ -263,8 +260,10 @@ void afficher_liste(t_liste* liste) {
 	t_noeud* courant = liste->tete;
 	int index = 0;
 
-	while (courant != NULL) {
-		if (courant->info != NULL) {
+	while (courant != NULL) 
+	{
+		if (courant->info != NULL) 
+		{
 			printf("Noeud %d: Pos=(%d,%d), Age=%d, Energie=%d, Gestation=%d\n",
 				index,
 				courant->info->posx,
@@ -273,15 +272,15 @@ void afficher_liste(t_liste* liste) {
 				courant->info->energie_sante,
 				courant->info->jrs_gest);
 		}
-		else {
+		else 
+		{
 			printf("Noeud %d: info == NULL\n", index);
 		}
 
 		courant = courant->next;
 		index++;
 	}
-
-	printf("Fin de la liste (%d éléments).\n\n\n", index);
+	printf("\n");
 }
 
 
@@ -296,7 +295,7 @@ int main()
 	srand(NULL);
 	int px = 1, py = 2, age = 33, energie = 3, gest = 3, nb_p_vlu = 250;
 	t_liste* liste_requin = init_liste();
-	t_ocean* ocean = (t_ocean*)calloc(LARGEUR * HAUTEUR, sizeof(t_ocean));
+	t_ocean* ocean = (t_ocean*)calloc(LARGEUR_OCEAN * HAUTEUR_OCEAN, sizeof(t_ocean));
 	init_liste_r(liste_requin, *ocean, nb_p_vlu);
 	printf("%d", nb_animaux(liste_requin));
 	courant_tete_liste(liste_requin);

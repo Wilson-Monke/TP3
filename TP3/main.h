@@ -1,36 +1,54 @@
 ﻿#pragma once
-#include "requin.h"
-#include "poisson.h"
-
 /****************************************************************************/
 /*  main.h																	*/
 /*  Fichier d'en t�te de l'algorithme										*/
 /*  Conception : Lucas Loge                                                 */
 /****************************************************************************/
+#include "requin.h"
+#include "poisson.h"
 
 
-#if !defined (MAIN_H)
-#define MAIN_H 1
+#define _CRT_SECURE_NO_WARNINGS
 
-/*
-	fonction qui determine si le poisson se fait manger
-*/
-int se_fait_manger(t_ocean ocean, t_noeud* poisson);
+#define MODE_GRAPHIQUE	1
+#define MODE_ECRI_FICH	0
+#define TOUCHE_ESC		27
+#define NB_ANIMAUX_VLU	300	
+#define POURCENTAGE_POISSON 0.8
+#define POURCCENTAGE_REQUIN 0.2
+
+
+// Couleurs
+#define COULEUR_ROUGE       12
+#define COULEUR_VERT		10
+#define COULEUR_VIOLET		13
+#define COULEUR_DEFAUT      7   //BLANC
+
+typedef struct
+{
+	int nb_poisson_initial;
+	int nb_requin_initial;
+}t_stats;
+
 
 /*
 	fonction qui incremente de 1 energie du requin qui mange le poisson
 */
-void requin_mange(t_ocean ocean, t_noeud* poisson);
+static int requin_mange(t_ocean ocean, t_noeud* poisson);
 
 /*
 	fonction de l'algorithme
 */
-void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_requin, int temps, int mode);
+static void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_requin, int temps, int mode);
+
+
+
+
+
+
 
 /*
-	fonction test qui permet de retourner si une erreur s'est produite
+	FONCTION DEBUG A RETIRER!!
 */
-void checklist(t_ocean ocean, t_liste* liste);
 
 void afficher_liste(t_liste* liste);
-#endif

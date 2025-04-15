@@ -19,8 +19,8 @@ void init_liste_p(t_liste* liste_p,t_ocean ocean, int nb_p_vlu)
 
 	while (nb_p < nb_p_vlu)
 	{
-		y = alea(0, HAUTEUR - 1);
-		x = alea(0, LARGEUR - 1);
+		y = alea(0, HAUTEUR_OCEAN - 1);
+		x = alea(0, LARGEUR_OCEAN - 1);
 		if ((ocean[y][x].contenu) == VIDE)
 		{
 			age = alea(0,MAX_AGE_POISSON);
@@ -34,32 +34,36 @@ void init_liste_p(t_liste* liste_p,t_ocean ocean, int nb_p_vlu)
 
 int deplace_poisson(t_noeud* poisson,t_ocean ocean)
 {
+	int posxActuelle = poisson->info->posx;
+	int posyActuelle = poisson->info->posy;
+
 	if (poisson == NULL)
 	{
 		printf("Erreur animal invalide");
 		return NULL;
 	}
 
-	effacer_contenu(ocean, poisson->info->posx, poisson->info->posy);
-
-	t_info_adj* info_adj = case_adj_vides(ocean, poisson->info->posx, poisson->info->posy);	//fonction qui observe les cases autour du poisson et retourne si elles sont pleines
-															//cette fonction determine aussi une direction & une case possibles pour un element ainsi on peut directement faire:
-
+	t_location_case_vide nouvelle_case = get_rand_case_vide(ocean, posxActuelle, posyActuelle);
 	
-	if (info_adj->plein != 1)								//si les cases adj ne sont pas pleines
+	if (nouvelle_case.invalide != 1)
 	{
-		poisson->info->posx = info_adj->n_x;				//ecrit les coords de la case disponible
-		poisson->info->posy = info_adj->n_y;
+		// Déplace le poisson à la nouvelle case
+		nvx_contenu_ptr(ocean, nouvelle_case.posx, nouvelle_case.posy, poisson, POISSON);
+		printf("\n\nPoisson ajouté dans une nouvelle case[%i][%i]\n",nouvelle_case.posy, nouvelle_case.posx);
+		print_poissons(ocean);
+
+		// Efface le poisson de l'ancienne case
+		effacer_contenu(ocean, posxActuelle, posyActuelle);
+		printf("\n\nPoisson deleter [%i][%i]\n", posyActuelle, posxActuelle);
+		print_poissons(ocean);
 	}
-
-	ocean[poisson->info->posy][poisson->info->posx].contenu = POISSON; //met le poisson a sa nouvelle position ou sa position intiale
-	ocean[poisson->info->posy][poisson->info->posx].animal = poisson;
+	
 	return 1;
-
 }
 
 int ajout_bb_p(t_liste* liste, t_ocean ocean, t_noeud* p_parent)
 {
+	/*
 	if (liste == NULL)
 	{
 		printf("Erreur liste invalide");
@@ -76,7 +80,7 @@ int ajout_bb_p(t_liste* liste, t_ocean ocean, t_noeud* p_parent)
 
 	int fx_couche = alea(0,2);
 
-	if (info_adj->plein == 0/*fx_couche != 1 && info_adj->plein == 0 && (nb_animaux(liste))<MAX_POISSON*/) //2/3 chances de reussite de grossesse &$ case_adj pas pleines && MAX_POISSON PAS ATTEINT
+	if (info_adj->plein == 0/*fx_couche != 1 && info_adj->plein == 0 && (nb_animaux(liste))<MAX_POISSON) //2/3 chances de reussite de grossesse &$ case_adj pas pleines && MAX_POISSON PAS ATTEINT
 	{
 		ocean[info_adj->n_y][info_adj->n_x].animal = ajout_animal(liste, info_adj->n_x, info_adj->n_y, 0, ENERGIE_INIT_POISSON, 0);	//ajoute le nouveau poisson a la fin de la liste
 		ocean[info_adj->n_y][info_adj->n_x].contenu = POISSON;							//place le nouveau poisson dans l'ocean
@@ -88,10 +92,10 @@ int ajout_bb_p(t_liste* liste, t_ocean ocean, t_noeud* p_parent)
 		p_parent->info->jrs_gest = (NB_JRS_GEST_POISSON);
 		return NULL;//operation n'a pas fonctionne mais jrs_gest est reinit
 	}
+	
+
+	*/
 	return 1; //operation est completee normalement
-
-
-
 }
 
 
