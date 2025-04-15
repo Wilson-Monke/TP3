@@ -1,16 +1,10 @@
 ﻿#pragma once
-#define _CRT_SECURE_NO_WARNINGS
-#include "main.h"
 /******************************************************************************/
-/*  main.h                                                                 */
+/*  main.cpp                                                                 */
 /*  Fichier d'en t�te de l'algorithme   */
-/*  Conception : Lucas Loge & Anthony Rosa                                              */
+/*  Conception : Lucas Loge & Anthony Rosa                      */
 /************************/
-
-
-/*---------------------------------------------------------------------------------------------------*/
-/*											CONSTANTES												 */
-/*---------------------------------------------------------------------------------------------------*/
+#include "main.h"
 
 
 int main(void)
@@ -22,23 +16,36 @@ int main(void)
 	t_liste* liste_poisson = init_liste();
 	t_stats stats;
 
-	int mode = MODE_AFFICHAGE;
+	int mode = MODE_GRAPHIQUE;
 	int sortieBoucle = 0;
 	int iteration = 0;
 
-	stats.nb_poisson_initial = NB_ANIMAUX_VLU * POURCENTAGE_POISSON;
-	stats.nb_requin_initial = NB_ANIMAUX_VLU * POURCCENTAGE_REQUIN;
+	stats.nb_poisson_initial = 10/*NB_ANIMAUX_VLU * POURCENTAGE_POISSON*/;
+	stats.nb_requin_initial = 2/*NB_ANIMAUX_VLU * POURCCENTAGE_REQUIN*/;
 
 	init_liste_p(liste_poisson, *ocean, stats.nb_poisson_initial);
 	init_liste_r(liste_requin, *ocean, stats.nb_requin_initial);
 
 
-	printf("Voulez-vous avec affichage? (O)ui/(N)on	");
-	
+	printf("Voulez-vous avec affichage? (O)ui/(N)on");
+	/*
+	while(mode != MODE_GRAPHIQUE || mode != MODE_ECRI_FICH)
+	{
+		scanf(%c, &saisieUtilisateur);
+
+		if(to_lower(saisieUtilisateur) == 'o')
+		{
+			printf("\n Mode Graphique selectionner");
+		}else if(to_lower(saisieUtilisateur) == 'n')
+		{
+			printf("\n Mode Graphique selectionner");
+		}
+	}
+	*/
 	printf("\n");
 
 
-	if (mode == MODE_AFFICHAGE)
+	if (mode == MODE_GRAPHIQUE)
 	{	
 		init_graphe(LARGEUR_OCEAN, HAUTEUR_OCEAN);
 		init_zone_environnement(HAUTEUR_OCEAN, LARGEUR_OCEAN);
@@ -47,7 +54,7 @@ int main(void)
 
 	while (!sortieBoucle)
 	{
-		if (mode == MODE_AFFICHAGE) 
+		if (mode == MODE_GRAPHIQUE)
 		{
 			if (touche_pesee())
 			{
@@ -58,14 +65,12 @@ int main(void)
 					sortieBoucle;
 				}
 			}
-
 			afficher_infos(iteration, nb_animaux(liste_poisson), nb_animaux(liste_requin));
 		}
-		else 
+		else // Mode fichier texte
 		{
-		// Mode fichier texte
+			// log from t_stats
 		}
-		
 		
 		algorithme(*ocean, liste_poisson, liste_requin, iteration, mode);
 		delai_ecran(100);//delais de 0.1 sec pour observer les elements
@@ -76,7 +81,6 @@ int main(void)
 	free_liste(liste_requin);
 	free(ocean);
 
-
 	//system("pause");
 	return EXIT_SUCCESS;
 }
@@ -85,9 +89,9 @@ int main(void)
 static void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_requin, int temps, int mode)
 {
 	//identifie & supprime les poissons mangées ou trop vieux
-	courant_tete_liste(liste_poisson);
+	/*courant_tete_liste(liste_poisson);
 	int nbPoissons = nb_animaux(liste_poisson);
-
+	
 	for (int i = 0;i < nbPoissons;i++)
 	{
 		// Se fait manger par un requin
@@ -105,32 +109,33 @@ static void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_req
 		
 		prochain_noeud(liste_poisson); //Prochain poisson dans la liste
 	}
-	
+	*/
 
 	// On traite tous les poisson
 	courant_tete_liste(liste_poisson);
-	int nb_poisson = nb_animaux(liste_poisson);
+	int nbPoissons = nb_animaux(liste_poisson);
 
-	for (int k = 0;k < nb_poisson;k++)
-	{
-		
-	if (liste_poisson->courant->info->jrs_gest >= NB_JRS_GEST_POISSON)
-	{
-		ajout_bb_p(liste_poisson, ocean, liste_poisson->courant);
-
-	}
-	else
+	for (int k = 0;k < nbPoissons;k++)
 	{
 		deplace_poisson(liste_poisson->courant, ocean);
-		//afficher_liste(liste_poisson);
-
-	}
-	if (liste_poisson->courant->info->age >= NB_JRS_PUB_POISSON)
-		liste_poisson->courant->info->jrs_gest++;
-
-	liste_poisson->courant->info->age++;
-
-		
+		afficher_liste(liste_poisson);
+		//print_ocean(ocean);
+		print_poissons(ocean);
+		/*if (liste_poisson->courant->info->jrs_gest >= NB_JRS_GEST_POISSON)
+		{
+			//ajout_bb_p(liste_poisson, ocean, liste_poisson->courant);
+		}
+		else
+		{
+			deplace_poisson(liste_poisson->courant, ocean);
+			//afficher_liste(liste_poisson);
+		}
+		if (liste_poisson->courant->info->age >= NB_JRS_PUB_POISSON) 
+		{
+			liste_poisson->courant->info->jrs_gest++;
+			liste_poisson->courant->info->age++;
+		}
+		*/
 		prochain_noeud(liste_poisson);
 	}
 
@@ -255,8 +260,10 @@ void afficher_liste(t_liste* liste) {
 	t_noeud* courant = liste->tete;
 	int index = 0;
 
-	while (courant != NULL) {
-		if (courant->info != NULL) {
+	while (courant != NULL) 
+	{
+		if (courant->info != NULL) 
+		{
 			printf("Noeud %d: Pos=(%d,%d), Age=%d, Energie=%d, Gestation=%d\n",
 				index,
 				courant->info->posx,
@@ -265,13 +272,15 @@ void afficher_liste(t_liste* liste) {
 				courant->info->energie_sante,
 				courant->info->jrs_gest);
 		}
-		else {
+		else 
+		{
 			printf("Noeud %d: info == NULL\n", index);
 		}
 
 		courant = courant->next;
 		index++;
 	}
+	printf("\n");
 }
 
 

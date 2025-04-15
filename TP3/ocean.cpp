@@ -37,17 +37,18 @@ int get_ptrAnimal_case(t_ocean ocean, int x, int y, void* ptrAnimal)
 	return 0;
 }
 
-int nvx_contenu_ptr(t_ocean ocean, int posx, int posy, t_case nv_case)
+int nvx_contenu_ptr(t_ocean ocean, int posx, int posy, void* nv_ptr, t_contenu nv_ctn)
 {
 	if (posx < 0 || posx >= LARGEUR_OCEAN || posy < 0 || posy >= LARGEUR_OCEAN) return 0;
 
-	ocean[posy][posx] = nv_case;
+	ocean[posy][posx].contenu = nv_ctn;
+	ocean[posy][posx].animal = nv_ptr;
 
-	if (nv_case.contenu == POISSON)
+	if (nv_ctn == POISSON)
 	{
 		afficher_case(posy, posx, HAUTEUR_OCEAN, LARGEUR_OCEAN, COULEUR_POISSON);
 	}
-	else if (nv_case.contenu == REQUIN)
+	else if (nv_ctn == REQUIN)
 	{
 		afficher_case(posy, posx, HAUTEUR_OCEAN, LARGEUR_OCEAN, COULEUR_REQUIN);
 	}
@@ -60,7 +61,7 @@ int effacer_contenu(t_ocean ocean, int posx, int posy)
 	ocean[posy][posx].contenu = VIDE;
 	ocean[posy][posx].animal = NULL;
 
-	afficher_case(posy, posx, HAUTEUR_OCEAN, LARGEUR_OCEAN, MAGENTA); // REMPLACER PAR COULEUR VIDE APRES DEBUG!!!
+	afficher_case(posy, posx, HAUTEUR_OCEAN, LARGEUR_OCEAN, COULEUR_VIDE); 
 
 	return 1;
 
@@ -93,13 +94,13 @@ static int nb_case_adj_vide(t_ocean ocean, int posx, int posy)
 }
 
 
-t_case get_rand_case_vide(t_ocean ocean, int posx, int posy)
+t_location_case_vide get_rand_case_vide(t_ocean ocean, int posx, int posy)
 {
 	int nbCaseVide = nb_case_adj_vide(ocean, posx, posy);
 	int caseChoisi = alea(0, nbCaseVide);
 	int iteration = 0;
-	t_case caseInvalide;
-	caseInvalide.invalide = 1;
+	t_location_case_vide case_vide;
+	case_vide.invalide = 1;
 
 	if (nbCaseVide != 0) 
 	{
@@ -115,7 +116,11 @@ t_case get_rand_case_vide(t_ocean ocean, int posx, int posy)
 
 					if (get_contenu_case(ocean, caseVide_x, caseVide_y) == VIDE && caseChoisi == iteration)
 					{
-						return ocean[caseVide_y][caseVide_x];
+						case_vide.posx = caseVide_x;
+						case_vide.posy = caseVide_y;
+						case_vide.invalide = 0;
+
+						return case_vide;
 					}
 					else
 					{
@@ -126,7 +131,7 @@ t_case get_rand_case_vide(t_ocean ocean, int posx, int posy)
 		}
 	}
 
-	return caseInvalide;
+	return case_vide;
 }
 
 
@@ -145,6 +150,39 @@ void dessiner_ocean(t_ocean ocean)
 				afficher_case(i, j, HAUTEUR_OCEAN, LARGEUR_OCEAN, COULEUR_REQUIN);
 			}
 		
+		}
+	}
+}
+
+
+
+void print_ocean(t_ocean ocean) 
+{
+	for (int y = 0; y < HAUTEUR_OCEAN; y++) {
+		for (int x = 0; x < LARGEUR_OCEAN; x++) {
+			// Get type as string
+			const char* contenu_str;
+			switch (ocean[y][x].contenu) {
+			case VIDE:    contenu_str = "VIDE"; break;
+			case POISSON: contenu_str = "POISSON"; break;
+			case REQUIN:  contenu_str = "REQUIN"; break;
+			default:      contenu_str = "INCONNU"; break;
+			}
+
+			// Print content and pointer address
+			printf("Case [%d][%d] : contenu = %s, animal = %p\n",
+				y, x, contenu_str, ocean[y][x].animal);
+		}
+	}
+}
+
+void print_poissons(t_ocean ocean) {
+	for (int y = 0; y < HAUTEUR_OCEAN; y++) {
+		for (int x = 0; x < LARGEUR_OCEAN; x++) {
+			if (ocean[y][x].contenu == POISSON) {
+				printf("POISSON at [%d][%d] : animal = %p\n",
+					y, x, ocean[y][x].animal);
+			}
 		}
 	}
 }

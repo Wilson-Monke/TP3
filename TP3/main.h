@@ -7,8 +7,10 @@
 #include "requin.h"
 #include "poisson.h"
 
-// Entr�e utilisateur
-#define MODE_AFFICHAGE	1
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#define MODE_GRAPHIQUE	1
 #define MODE_ECRI_FICH	0
 #define TOUCHE_ESC		27
 #define NB_ANIMAUX_VLU	300	

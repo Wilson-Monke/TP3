@@ -34,22 +34,28 @@ void init_liste_p(t_liste* liste_p,t_ocean ocean, int nb_p_vlu)
 
 int deplace_poisson(t_noeud* poisson,t_ocean ocean)
 {
-	 
+	int posxActuelle = poisson->info->posx;
+	int posyActuelle = poisson->info->posy;
+
 	if (poisson == NULL)
 	{
 		printf("Erreur animal invalide");
 		return NULL;
 	}
 
-	t_case temp = get_rand_case_vide(ocean, poisson->info->posx, poisson->info->posy);
+	t_location_case_vide nouvelle_case = get_rand_case_vide(ocean, posxActuelle, posyActuelle);
 	
-	if (temp.invalide != 1) 
+	if (nouvelle_case.invalide != 1)
 	{
 		// Déplace le poisson à la nouvelle case
-		nvx_contenu_ptr(ocean, poisson->info->posx, poisson->info->posy, temp);
+		nvx_contenu_ptr(ocean, nouvelle_case.posx, nouvelle_case.posy, poisson, POISSON);
+		printf("\n\nPoisson ajouté dans une nouvelle case[%i][%i]\n",nouvelle_case.posy, nouvelle_case.posx);
+		print_poissons(ocean);
 
 		// Efface le poisson de l'ancienne case
-		effacer_contenu(ocean, poisson->info->posx, poisson->info->posy);
+		effacer_contenu(ocean, posxActuelle, posyActuelle);
+		printf("\n\nPoisson deleter [%i][%i]\n", posyActuelle, posxActuelle);
+		print_poissons(ocean);
 	}
 	
 	return 1;
