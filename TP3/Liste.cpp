@@ -120,13 +120,16 @@ int prochain_noeud(t_liste* liste)
 		printf("Erreur liste invalide");
 		return NULL;
 	}
-	if (liste->courant->next == NULL)
+	else if(liste->courant->next == NULL)
 	{
-		printf("Fin de la liste");
+		//printf("Fin de la liste");
 		return NULL;
 	}
-	else
+	else 
+	{
 		liste->courant = liste->courant->next;
+	}
+	
 	return 1;
 }
 

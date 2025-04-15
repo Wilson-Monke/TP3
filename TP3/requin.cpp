@@ -24,8 +24,8 @@ void init_liste_r(t_liste* liste_r, t_ocean ocean, int nb_r_vlu)
 
 	while (nb_r < nb_r_vlu)
 	{
-		y = alea(0, HAUTEUR - 1);
-		x = alea(0, LARGEUR - 1);
+		y = alea(0, HAUTEUR_OCEAN - 1);
+		x = alea(0, LARGEUR_OCEAN - 1);
 		if ((ocean[y][x].contenu) == VIDE)
 		{
 			age = alea(0, MAX_AGE_REQUIN);
@@ -45,6 +45,7 @@ void init_liste_r(t_liste* liste_r, t_ocean ocean, int nb_r_vlu)
 
 int deplace_requin(t_noeud* requin, t_ocean ocean)
 {
+	/*
 	if (requin == NULL)
 	{
 		printf("Erreur animal invalide");
@@ -61,12 +62,14 @@ int deplace_requin(t_noeud* requin, t_ocean ocean)
 
 	ocean[requin->info->posy][requin->info->posx].contenu = REQUIN; //met le requin a sa nouvelle position ou sa position intiale
 	ocean[requin->info->posy][requin->info->posx].animal = requin;
+	
+	*/
 	return 1;
-
 }
 
 int ajout_bb_r(t_liste* liste, t_ocean ocean, t_noeud* r_parent)
 {
+	/*
 	if (liste == NULL)
 	{
 		printf("Erreur liste invalide");
@@ -94,9 +97,9 @@ int ajout_bb_r(t_liste* liste, t_ocean ocean, t_noeud* r_parent)
 		r_parent->info->jrs_gest = (NB_JRS_GEST_REQUIN);									//reinit jrs_gest requin_parent
 		return NULL;//operation n'a pas fonctionne
 	}
+	
+	*/
 	return 1; //operation est completee normalement
-
-
 
 }
 
