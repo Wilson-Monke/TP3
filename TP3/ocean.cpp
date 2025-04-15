@@ -153,39 +153,3 @@ void dessiner_ocean(t_ocean ocean)
 		}
 	}
 }
-
-
-
-void print_ocean(t_ocean ocean) 
-{
-	for (int y = 0; y < HAUTEUR_OCEAN; y++) {
-		for (int x = 0; x < LARGEUR_OCEAN; x++) {
-			// Get type as string
-			const char* contenu_str;
-			switch (ocean[y][x].contenu) {
-			case VIDE:    contenu_str = "VIDE"; break;
-			case POISSON: contenu_str = "POISSON"; break;
-			case REQUIN:  contenu_str = "REQUIN"; break;
-			default:      contenu_str = "INCONNU"; break;
-			}
-
-			// Print content and pointer address
-			printf("Case [%d][%d] : contenu = %s, animal = %p\n",
-				y, x, contenu_str, ocean[y][x].animal);
-		}
-	}
-}
-
-void print_poissons(t_ocean ocean) {
-	for (int y = 0; y < HAUTEUR_OCEAN; y++) {
-		for (int x = 0; x < LARGEUR_OCEAN; x++) {
-			if (ocean[y][x].contenu == POISSON) {
-				printf("POISSON at [%d][%d] : animal = %p\n",
-					y, x, ocean[y][x].animal);
-			}else if (ocean[y][x].contenu == POISSON) {
-				printf("REQUIN at [%d][%d] : animal = %p\n",
-					y, x, ocean[y][x].animal);
-			}
-		}
-	}
-}

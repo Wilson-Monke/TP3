@@ -53,5 +53,4 @@ static int nb_case_adj_vide(t_ocean ocean, int posx, int posy);
 t_location_case_vide get_rand_case_vide(t_ocean ocean, int posx, int posy);
 
 
-void print_ocean(t_ocean ocean);
-void print_poissons(t_ocean ocean);
+

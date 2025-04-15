@@ -43,15 +43,3 @@ static void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_req
 
 
 
-
-
-
-
-/*
-	FONCTION DEBUG A RETIRER!!
-*/
-
-/*
-	Fonction qui print la liste dans l'invite de commande
-*/
-void afficher_liste(t_liste* liste);
