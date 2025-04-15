@@ -49,15 +49,16 @@ int deplace_poisson(t_noeud* poisson,t_ocean ocean)
 	{
 		// Déplace le poisson à la nouvelle case
 		nvx_contenu_ptr(ocean, nouvelle_case.posx, nouvelle_case.posy, poisson, POISSON);
-		printf("\n\nPoisson ajouté dans une nouvelle case[%i][%i]\n",nouvelle_case.posy, nouvelle_case.posx);
+
 		//print_poissons(ocean);
+		// 
 		//Modifier les infos du poisson
 		poisson->info->posx = nouvelle_case.posx;
 		poisson->info->posy = nouvelle_case.posy;
 
 		// Efface le poisson de l'ancienne case
 		effacer_contenu(ocean, posxActuelle, posyActuelle);
-		printf("\n\nPoisson deleter [%i][%i]\n", posyActuelle, posxActuelle);
+
 		//print_poissons(ocean);
 	}
 	

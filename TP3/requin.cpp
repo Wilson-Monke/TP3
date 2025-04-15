@@ -32,6 +32,7 @@ void init_liste_r(t_liste* liste_r, t_ocean ocean, int nb_r_vlu)
 			energie = alea(1, ENERGIE_DIGESTION * 2);
 			if (age >= NB_JRS_PUB_REQUIN)
 				gest = alea(1, (NB_JRS_GEST_REQUIN));
+				//gest = 0;
 			else
 				gest = 0;
 
@@ -61,16 +62,17 @@ int deplace_requin(t_noeud* requin, t_ocean ocean)
 	{
 		// Déplace le requin à la nouvelle case
 		nvx_contenu_ptr(ocean, nouvelle_case.posx, nouvelle_case.posy, requin, REQUIN);
-		printf("\n\nPoisson ajouté dans une nouvelle case[%i][%i]\n", nouvelle_case.posy, nouvelle_case.posx);
-		print_poissons(ocean);
+
+		//print_poissons(ocean);
+		// 
 		//Modifier les infos du requin
 		requin->info->posx = nouvelle_case.posx;
 		requin->info->posy = nouvelle_case.posy;
 
 		// Efface le requin de l'ancienne case
 		effacer_contenu(ocean, posxActuelle, posyActuelle);
-		printf("\n\nPoisson deleter [%i][%i]\n", posyActuelle, posxActuelle);
-		print_poissons(ocean);
+
+		//print_poissons(ocean);
 	}
 
 	return 1;

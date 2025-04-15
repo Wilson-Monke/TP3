@@ -13,7 +13,7 @@
 #define MODE_GRAPHIQUE	1
 #define MODE_ECRI_FICH	0
 #define TOUCHE_ESC		27
-#define NB_ANIMAUX_VLU	300	
+#define NB_ANIMAUX_VLU	500	
 #define POURCENTAGE_POISSON 0.8
 #define POURCCENTAGE_REQUIN 0.2
 
@@ -26,8 +26,8 @@
 
 typedef struct
 {
-	int nb_poisson_initial;
-	int nb_requin_initial;
+	int nb_poisson;
+	int nb_requin;
 }t_stats;
 
 

@@ -104,13 +104,24 @@ int nb_animaux(t_liste* liste)
 	}
 	int nb_a = 1;
 	courant_tete_liste(liste);
-	while (liste->courant->next != NULL) //parcoure la liste jùsqu'à la fin-1 donc on commence à compter à 1 & il y a tjrs au moins 1 élément dans la liste
+	if (liste->tete == NULL)			//si pas de tete retourne 0
 	{
-		nb_a++;
-		liste->courant = liste->courant->next;
+		return 0;
 	}
-	liste->courant = temp;
-	return nb_a;
+	else if (liste->tete->next == NULL) //si il y a juste la tête returne 1
+	{
+		return 1;
+	}else 
+	{
+		while (liste->courant->next != NULL) //parcoure la liste jùsqu'à la fin-1 donc on commence à compter à 1
+		{
+			nb_a++;
+			liste->courant = liste->courant->next;
+		}
+		liste->courant = temp;
+		return nb_a;
+	}
+
 }
 
 

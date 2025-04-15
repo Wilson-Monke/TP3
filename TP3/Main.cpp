@@ -14,17 +14,21 @@ int main(void)
 	t_ocean* ocean = (t_ocean*)calloc(HAUTEUR_OCEAN,sizeof(t_ocean)); //on initialise 60 rangées à contenu=VIDE & animal=0x000000
 	t_liste* liste_requin = init_liste();
 	t_liste* liste_poisson = init_liste();
-	t_stats stats;
+	t_stats stats;			//stats durant les iterations
+	t_stats stats_init;		//stats initiales
 
 	int mode = MODE_GRAPHIQUE;
 	int sortieBoucle = 0;
 	int iteration = 0;
 
-	stats.nb_poisson_initial = 10/*NB_ANIMAUX_VLU * POURCENTAGE_POISSON*/;
-	stats.nb_requin_initial = 2/*NB_ANIMAUX_VLU * POURCCENTAGE_REQUIN*/;
+	stats_init.nb_poisson = NB_ANIMAUX_VLU * POURCENTAGE_POISSON;
+	stats_init.nb_requin = NB_ANIMAUX_VLU * POURCCENTAGE_REQUIN;
 
-	init_liste_p(liste_poisson, *ocean, stats.nb_poisson_initial);
-	init_liste_r(liste_requin, *ocean, stats.nb_requin_initial);
+	init_liste_p(liste_poisson, *ocean, stats_init.nb_poisson);
+	init_liste_r(liste_requin, *ocean, stats_init.nb_requin);
+
+	stats.nb_poisson = nb_animaux(liste_poisson);
+	stats.nb_requin = nb_animaux(liste_requin);
 
 
 	printf("Voulez-vous avec affichage? (O)ui/(N)on");
@@ -35,10 +39,10 @@ int main(void)
 
 		if(to_lower(saisieUtilisateur) == 'o')
 		{
-			printf("\n Mode Graphique selectionner");
+			printf("\n Mode Graphique selectionné");
 		}else if(to_lower(saisieUtilisateur) == 'n')
 		{
-			printf("\n Mode Graphique selectionner");
+			printf("\n Mode Graphique selectionné");
 		}
 	}
 	*/
@@ -52,7 +56,7 @@ int main(void)
 		dessiner_ocean(*ocean);
 	}
 
-	while (!sortieBoucle)
+	while (!sortieBoucle || (iteration <= 5000))//On répète la boucle tant qu’il reste des poissons et des requins OU qu’un nombre maximal d’itérations n’est pas atteint(eg. 5000) OU que l’utilisateur n’a pas arrêté la simulation(avec la touche <ESC>)
 	{
 		if (mode == MODE_GRAPHIQUE)
 		{
@@ -71,8 +75,25 @@ int main(void)
 		{
 			// log from t_stats
 		}
+
 		
 		algorithme(*ocean, liste_poisson, liste_requin, iteration, mode);
+
+		//enregistre les nouvelles info des listes
+		stats.nb_poisson = nb_animaux(liste_poisson);
+		stats.nb_requin = nb_animaux(liste_requin);
+		if (stats.nb_poisson == 0)
+		{
+			fermer_mode_graphique();
+			printf("\nNombre de poisson minimal atteint, sortie du mode d'affichage graphique.\n");
+			sortieBoucle;
+		}
+		if (stats.nb_requin == 0)
+		{
+			fermer_mode_graphique();
+			printf("\nNombre de requin minimal atteint, sortie du mode d'affichage graphique.\n");
+			sortieBoucle;
+		}
 		delai_ecran(100);//delais de 0.1 sec pour observer les elements
 		iteration++;
 	}
@@ -178,46 +199,6 @@ static void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_req
 		prochain_noeud(liste_requin);
 	}
 
-	/*
-
-	
-
-
-	//identifie puis deplace ou genere un nouveau requin
-	
-	t_info_adj* info_adj_p = NULL;
-	courant_tete_liste(liste_poisson);
-
-	int nb_poisson = nb_animaux(liste_poisson);
-	for (int k = 0;k < nb_poisson;k++)
-	{
-		info_adj_p = case_adj_vides(ocean, liste_poisson->courant->info->posx, liste_poisson->courant->info->posy);
-		if (info_adj_p->plein == 0)
-		{
-			if (liste_poisson->courant->info->jrs_gest >= NB_JRS_GEST_POISSON)
-			{
-				ajout_bb_p(liste_poisson, ocean, liste_poisson->courant);
-				
-			}
-			else
-			{
-				deplace_poisson(liste_poisson->courant, ocean);
-				//afficher_liste(liste_poisson);
-				
-			}
-			if (liste_poisson->courant->info->age >= NB_JRS_PUB_POISSON)
-				liste_poisson->courant->info->jrs_gest++;
-
-			liste_poisson->courant->info->age++;
-
-		}
-		prochain_noeud(liste_poisson);
-	}
-	
-
-
-
-	*/
 }
 
 
