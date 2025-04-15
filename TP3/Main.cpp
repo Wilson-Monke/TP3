@@ -11,78 +11,71 @@
 /*---------------------------------------------------------------------------------------------------*/
 /*											CONSTANTES												 */
 /*---------------------------------------------------------------------------------------------------*/
-// Entr�e utilisateur
-#define MODE_AFFICHAGE	'o'
-#define MODE_ECRI_FICH	'N'
-#define TOUCHE_ESC		27
-#define NB_ANIMAUX_VLU	300	
 
-// Couleurs
-#define COULEUR_ROUGE       12
-#define COULEUR_VERT		10
-#define COULEUR_VIOLET		13
-#define COULEUR_DEFAUT      7   //BLANC
 
 int main(void)
 {
 	init_alea();
-	char saisieUtilisateur = '0';
-	int mode = 0;
+	
 	t_ocean* ocean = (t_ocean*)calloc(LARGEUR_OCEAN * HAUTEUR_OCEAN, sizeof(t_ocean));
 	t_liste* liste_requin = init_liste();
 	t_liste* liste_poisson = init_liste();
-	
+	t_stats stats;
+
+	int mode = MODE_AFFICHAGE;
+	int sortieBoucle = 0;
+	int iteration = 0;
+
+	stats.nb_poisson_initial = NB_ANIMAUX_VLU * POURCENTAGE_POISSON;
+	stats.nb_requin_initial = NB_ANIMAUX_VLU * POURCCENTAGE_REQUIN;
+
+	init_liste_p(liste_poisson, *ocean, stats.nb_poisson_initial);
+	init_liste_r(liste_requin, *ocean, stats.nb_requin_initial);
+
 
 	printf("Voulez-vous avec affichage? (O)ui/(N)on	");
-	mode = 1;
-	//scanf("%c", &saisieUtilisateur);
 	
-	//switch (saisieUtilisateur)
-	//{
-	//case MODE_AFFICHAGE:
-	//	mode = 1;
-	//	break;
-
-	//case MODE_ECRI_FICH:
-	//	mode = 2;
-	//	break;
-
-	//default:
-	//	mode = NULL;
-	//	break;
-	//}
-
 	printf("\n");
 
-	if (mode == 1)
-	{
-		int touche = 0;
-		int nb_p = (NB_ANIMAUX_VLU * 0.8), nb_r = (NB_ANIMAUX_VLU * 0.2);
-		int iteration = 0;
 
-		init_liste_p(liste_poisson, *ocean, nb_p);
-		init_liste_r(liste_requin, *ocean, nb_r);
+	if (mode == MODE_AFFICHAGE)
+	{	
 		init_graphe(LARGEUR_OCEAN, HAUTEUR_OCEAN);
 		init_zone_environnement(HAUTEUR_OCEAN, LARGEUR_OCEAN);
 		dessiner_ocean(*ocean);
-		while (touche != 27)   // 27 = ASCII for ESC
+	}
+
+	while (!sortieBoucle)
+	{
+		if (mode == MODE_AFFICHAGE) 
 		{
-			if (touche_pesee()) {
-				touche = obtenir_touche();
-				fermer_mode_graphique();
-				printf("\nTouche ESC appuyer, sortie du mode d'affichage graphique.\n");
+			if (touche_pesee())
+			{
+				if (obtenir_touche() == TOUCHE_ESC)
+				{
+					fermer_mode_graphique();
+					printf("\nTouche ESC appuyer, sortie du mode d'affichage graphique.\n");
+					sortieBoucle;
+				}
 			}
 
-			
 			afficher_infos(iteration, nb_animaux(liste_poisson), nb_animaux(liste_requin));
-			algorithme(*ocean, liste_poisson, liste_requin, iteration, mode);
-			delai_ecran(100);//delais de 0.1 sec pour observer les elements
-			iteration++;
 		}
-		free_liste(liste_poisson);
-		free_liste(liste_requin);
-		free(ocean);
+		else 
+		{
+		// Mode fichier texte
+		}
+		
+		
+		algorithme(*ocean, liste_poisson, liste_requin, iteration, mode);
+		delai_ecran(100);//delais de 0.1 sec pour observer les elements
+		iteration++;
 	}
+
+	free_liste(liste_poisson);
+	free_liste(liste_requin);
+	free(ocean);
+
 
 	//system("pause");
 	return EXIT_SUCCESS;
