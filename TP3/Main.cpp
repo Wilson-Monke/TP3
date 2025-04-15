@@ -91,8 +91,7 @@ int main(void)
 
 static void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_requin, int temps, int mode)
 {
-	
-	//identifie & supprime les poissons manges ou trop vieux
+	//identifie & supprime les poissons mangées ou trop vieux
 	courant_tete_liste(liste_poisson);
 	int nbPoissons = nb_animaux(liste_poisson);
 
@@ -110,10 +109,39 @@ static void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_req
 			// Oui
 			retirer_poisson(liste_poisson, ocean);
 		}
-
-		prochain_noeud(liste_poisson);
+		
+		prochain_noeud(liste_poisson); //Prochain poisson dans la liste
 	}
 	
+
+	// On traite tous les poisson
+	courant_tete_liste(liste_poisson);
+	int nb_poisson = nb_animaux(liste_poisson);
+
+	for (int k = 0;k < nb_poisson;k++)
+	{
+		
+	if (liste_poisson->courant->info->jrs_gest >= NB_JRS_GEST_POISSON)
+	{
+		ajout_bb_p(liste_poisson, ocean, liste_poisson->courant);
+
+	}
+	else
+	{
+		deplace_poisson(liste_poisson->courant, ocean);
+		//afficher_liste(liste_poisson);
+
+	}
+	if (liste_poisson->courant->info->age >= NB_JRS_PUB_POISSON)
+		liste_poisson->courant->info->jrs_gest++;
+
+	liste_poisson->courant->info->age++;
+
+		
+		prochain_noeud(liste_poisson);
+	}
+
+
 
 	/*
 

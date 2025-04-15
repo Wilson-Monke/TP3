@@ -34,29 +34,24 @@ void init_liste_p(t_liste* liste_p,t_ocean ocean, int nb_p_vlu)
 
 int deplace_poisson(t_noeud* poisson,t_ocean ocean)
 {
-	/*
+	 
 	if (poisson == NULL)
 	{
 		printf("Erreur animal invalide");
 		return NULL;
 	}
 
-	effacer_contenu(ocean, poisson->info->posx, poisson->info->posy);
-
-	//t_info_adj* info_adj = case_adj_vides(ocean, poisson->info->posx, poisson->info->posy);	//fonction qui observe les cases autour du poisson et retourne si elles sont pleines
-															//cette fonction determine aussi une direction & une case possibles pour un element ainsi on peut directement faire:
-
+	t_case temp = get_rand_case_vide(ocean, poisson->info->posx, poisson->info->posy);
 	
-	if (info_adj->plein != 1)								//si les cases adj ne sont pas pleines
+	if (temp.invalide != 1) 
 	{
-		poisson->info->posx = info_adj->n_x;				//ecrit les coords de la case disponible
-		poisson->info->posy = info_adj->n_y;
-	}
+		// Déplace le poisson à la nouvelle case
+		nvx_contenu_ptr(ocean, poisson->info->posx, poisson->info->posy, temp);
 
-	ocean[poisson->info->posy][poisson->info->posx].contenu = POISSON; //met le poisson a sa nouvelle position ou sa position intiale
-	ocean[poisson->info->posy][poisson->info->posx].animal = poisson;
+		// Efface le poisson de l'ancienne case
+		effacer_contenu(ocean, poisson->info->posx, poisson->info->posy);
+	}
 	
-	*/
 	return 1;
 }
 

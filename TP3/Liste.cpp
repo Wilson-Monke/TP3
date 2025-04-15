@@ -89,6 +89,7 @@ void courant_tete_liste(t_liste* liste)
 	{
 		printf("Erreur liste invalide");
 	}
+
 	liste->courant = liste->tete;
 }
 
