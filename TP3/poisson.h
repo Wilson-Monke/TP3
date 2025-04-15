@@ -39,7 +39,7 @@ int deplace_poisson(t_noeud* poisson, t_ocean ocean);
 	Ajoute un nouveau b�b�-poisson � la liste dans une case vide de l'oc�an
 	Re�oit la liste des poissons, l'oc�an et le pointeur attribu� au poisson-parent
 */
-int ajout_bb_p(t_liste* liste, t_ocean ocean, t_noeud* p_parent);
+int ajout_bb_poisson(t_liste* liste, t_ocean ocean, t_noeud* p_parent);
 
 /*
 	Retire un poisson de la liste_poisson & vide sa case attribu�e de l'oc�an

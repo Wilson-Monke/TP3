@@ -38,7 +38,7 @@ int deplace_requin(t_noeud* requin, t_ocean ocean);
 	Ajoute un nouveau b�b�-requin � la liste dans une case vide de l'oc�an
 	Re�oit la liste des requins, l'oc�an et le pointeur attribu� au requin-parent
 */
-int ajout_bb_r(t_liste* liste, t_ocean ocean, t_noeud* r_parent);
+int ajout_bb_requin(t_liste* liste, t_ocean ocean, t_noeud* r_parent);
 
 /*
 	Retire un requin de la liste_requin & vide sa case attribu�e de l'oc�an

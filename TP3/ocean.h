@@ -40,7 +40,7 @@ void vider_ocean(t_ocean ocean);
 // Retourne une valeur t_contenu
 t_contenu get_contenu_case(t_ocean ocean, int x, int y);
 
-int get_ptrAnimal_case(t_ocean ocean, int x, int y, void* ptrAnimal);
+void* get_ptrAnimal_case(t_ocean ocean, int x, int y, void* ptrAnimal);
 
 int nvx_contenu_ptr(t_ocean ocean, int posx, int posy, void* nv_ptr, t_contenu nv_ctn);
 

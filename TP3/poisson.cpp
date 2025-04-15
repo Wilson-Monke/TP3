@@ -50,20 +50,25 @@ int deplace_poisson(t_noeud* poisson,t_ocean ocean)
 		// Déplace le poisson à la nouvelle case
 		nvx_contenu_ptr(ocean, nouvelle_case.posx, nouvelle_case.posy, poisson, POISSON);
 		printf("\n\nPoisson ajouté dans une nouvelle case[%i][%i]\n",nouvelle_case.posy, nouvelle_case.posx);
-		print_poissons(ocean);
+		//print_poissons(ocean);
+		//Modifier les infos du poisson
+		poisson->info->posx = nouvelle_case.posx;
+		poisson->info->posy = nouvelle_case.posy;
 
 		// Efface le poisson de l'ancienne case
 		effacer_contenu(ocean, posxActuelle, posyActuelle);
 		printf("\n\nPoisson deleter [%i][%i]\n", posyActuelle, posxActuelle);
-		print_poissons(ocean);
+		//print_poissons(ocean);
 	}
 	
 	return 1;
 }
 
-int ajout_bb_p(t_liste* liste, t_ocean ocean, t_noeud* p_parent)
+int ajout_bb_poisson(t_liste* liste, t_ocean ocean, t_noeud* p_parent)
 {
-	/*
+	int posxActuelle = p_parent->info->posx;
+	int posyActuelle = p_parent->info->posy;
+
 	if (liste == NULL)
 	{
 		printf("Erreur liste invalide");
@@ -75,26 +80,24 @@ int ajout_bb_p(t_liste* liste, t_ocean ocean, t_noeud* p_parent)
 		return NULL;
 	}
 
-	t_info_adj* info_adj = case_adj_vides(ocean, p_parent->info->posx, p_parent->info->posy);//fonction qui observe les cases autour du poisson et retourne si elles sont pleines
-															//cette fonction determine aussi une direction & une case possibles pour un element ainsi on peut directement faire:
+	t_location_case_vide nouvelle_case = get_rand_case_vide(ocean, posxActuelle, posyActuelle);
 
 	int fx_couche = alea(0,2);
 
-	if (info_adj->plein == 0/*fx_couche != 1 && info_adj->plein == 0 && (nb_animaux(liste))<MAX_POISSON) //2/3 chances de reussite de grossesse &$ case_adj pas pleines && MAX_POISSON PAS ATTEINT
+	if (nouvelle_case.invalide != 1 && fx_couche != 1 && (nb_animaux(liste))<MAX_POISSON) //2/3 chances de reussite de grossesse &$ case_adj pas pleines && MAX_POISSON PAS ATTEINT
 	{
-		ocean[info_adj->n_y][info_adj->n_x].animal = ajout_animal(liste, info_adj->n_x, info_adj->n_y, 0, ENERGIE_INIT_POISSON, 0);	//ajoute le nouveau poisson a la fin de la liste
-		ocean[info_adj->n_y][info_adj->n_x].contenu = POISSON;							//place le nouveau poisson dans l'ocean
+		ocean[nouvelle_case.posy][nouvelle_case.posx].animal = ajout_animal(liste, nouvelle_case.posx, nouvelle_case.posy, 0, ENERGIE_INIT_POISSON, 0);	//ajoute le nouveau poisson a la fin de la liste
+		ocean[nouvelle_case.posy][nouvelle_case.posx].contenu = POISSON;							//place le nouveau poisson dans l'ocean
 		p_parent->info->energie_sante--;												//decrem energie du poisson_parent
-		p_parent->info->jrs_gest = (NB_JRS_GEST_POISSON);									//reinit jrs_gest poisson_parent
+		p_parent->info->jrs_gest = -(NB_JRS_GEST_POISSON);									//reinit jrs_gest poisson_parent
 	}
 	else
 	{
-		p_parent->info->jrs_gest = (NB_JRS_GEST_POISSON);
+		p_parent->info->jrs_gest = -(NB_JRS_GEST_POISSON);
 		return NULL;//operation n'a pas fonctionne mais jrs_gest est reinit
 	}
 	
 
-	*/
 	return 1; //operation est completee normalement
 }
 

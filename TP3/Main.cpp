@@ -11,7 +11,7 @@ int main(void)
 {
 	init_alea();
 	
-	t_ocean* ocean = (t_ocean*)calloc(LARGEUR_OCEAN * HAUTEUR_OCEAN, sizeof(t_ocean));
+	t_ocean* ocean = (t_ocean*)calloc(HAUTEUR_OCEAN,sizeof(t_ocean)); //on initialise 60 rangées à contenu=VIDE & animal=0x000000
 	t_liste* liste_requin = init_liste();
 	t_liste* liste_poisson = init_liste();
 	t_stats stats;
@@ -89,11 +89,13 @@ int main(void)
 static void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_requin, int temps, int mode)
 {
 	//identifie & supprime les poissons mangées ou trop vieux
-	/*courant_tete_liste(liste_poisson);
+	courant_tete_liste(liste_poisson);
 	int nbPoissons = nb_animaux(liste_poisson);
 	
 	for (int i = 0;i < nbPoissons;i++)
 	{
+
+
 		// Se fait manger par un requin
 		if (requin_mange(ocean, liste_poisson->courant))
 		{
@@ -101,7 +103,7 @@ static void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_req
 			printf("Poisson c'est fait manger!! dans l'algo\n!!!");
 		}
 		// Est-ce qu'il meurt de vieilleisse?
-		else if (liste_poisson->courant->info->age > MAX_AGE_POISSON)
+		else if (liste_poisson->courant->info->age > MAX_AGE_POISSON) //fonction indicatrice qui supprime les poissons ayant 
 		{
 			// Oui
 			retirer_poisson(liste_poisson, ocean);
@@ -109,21 +111,32 @@ static void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_req
 		
 		prochain_noeud(liste_poisson); //Prochain poisson dans la liste
 	}
-	*/
+
+	//identifie & supprime requins trop vieux ou morts de faim
+
+	courant_tete_liste(liste_requin);
+	int nbRequins = nb_animaux(liste_requin);
+
+	for (int j = 0; j < nbRequins; j++)
+	{
+		if (liste_requin->courant->info->age > MAX_AGE_REQUIN || liste_requin->courant->info->energie_sante <= 0)
+		{
+			retirer_requin(liste_requin, ocean);
+		}
+		prochain_noeud(liste_requin);
+	}
 
 	// On traite tous les poisson
 	courant_tete_liste(liste_poisson);
-	int nbPoissons = nb_animaux(liste_poisson);
+	nbPoissons = nb_animaux(liste_poisson);
 
 	for (int k = 0;k < nbPoissons;k++)
 	{
-		deplace_poisson(liste_poisson->courant, ocean);
-		afficher_liste(liste_poisson);
+		//deplace_poisson(liste_poisson->courant, ocean);
 		//print_ocean(ocean);
-		print_poissons(ocean);
-		/*if (liste_poisson->courant->info->jrs_gest >= NB_JRS_GEST_POISSON)
+		if (liste_poisson->courant->info->jrs_gest >= NB_JRS_GEST_POISSON)
 		{
-			//ajout_bb_p(liste_poisson, ocean, liste_poisson->courant);
+			ajout_bb_poisson(liste_poisson, ocean, liste_poisson->courant);
 		}
 		else
 		{
@@ -133,31 +146,44 @@ static void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_req
 		if (liste_poisson->courant->info->age >= NB_JRS_PUB_POISSON) 
 		{
 			liste_poisson->courant->info->jrs_gest++;
-			liste_poisson->courant->info->age++;
 		}
-		*/
+		liste_poisson->courant->info->age++;
 		prochain_noeud(liste_poisson);
 	}
+	afficher_liste(liste_poisson);
+	print_poissons(ocean);
 
 
+	//identifie puis deplace ou genere un nouveau requin
+
+
+	courant_tete_liste(liste_requin);
+	nbRequins = nb_animaux(liste_requin);
+
+	for (int k = 0; k < nbRequins; k++)
+	{
+		if (liste_requin->courant->info->jrs_gest >= NB_JRS_GEST_REQUIN)
+		{
+			ajout_bb_requin(liste_requin, ocean, liste_requin->courant);
+		}
+		else
+		{
+			deplace_requin(liste_requin->courant, ocean);
+		}
+		if (liste_requin->courant->info->age >= NB_JRS_PUB_REQUIN)
+			liste_requin->courant->info->jrs_gest++;
+
+		liste_requin->courant->info->age++; //incremente age peu importe
+
+		prochain_noeud(liste_requin);
+	}
 
 	/*
 
-	//identifie & supprime requins trop vieux ou morts de faim
-	
-	courant_tete_liste(liste_requin);
-	for (int j = 0;j < nb_animaux(liste_requin);j++) 
-	{
-		if (liste_requin->courant->info->age > MAX_AGE_REQUIN || liste_requin->courant->info->age <= 0)
-		{
-			retirer_requin(liste_requin, ocean);
-		}
-		prochain_noeud(liste_requin);
-	}
 	
 
 
-	//identifie puis deplace ou genere un nouveau poisson
+	//identifie puis deplace ou genere un nouveau requin
 	
 	t_info_adj* info_adj_p = NULL;
 	courant_tete_liste(liste_poisson);
@@ -191,65 +217,39 @@ static void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_req
 
 
 
-	//identifie puis deplace ou genere un nouveau requin
-	
-
-	t_info_adj* info_adj_r = NULL;
-	courant_tete_liste(liste_requin);
-	for (int k = 0;k < nb_animaux(liste_requin);k++) 
-	{
-		info_adj_r = case_adj_vides(ocean, liste_requin->courant->info->posx, liste_requin->courant->info->posy);
-		if (info_adj_r->plein == 0)
-		{
-			if (liste_requin->courant->info->jrs_gest >= NB_JRS_GEST_REQUIN)
-			{
-				ajout_bb_r(liste_requin, ocean, liste_requin->courant);
-			}
-			else
-			{
-				deplace_requin(liste_requin->courant, ocean);
-			}
-			if (liste_requin->courant->info->age >= NB_JRS_PUB_POISSON)
-				liste_requin->courant->info->jrs_gest++;
-
-			liste_requin->courant->info->age++;
-
-		}
-		prochain_noeud(liste_requin);
-	}
 	*/
 }
 
 
 static int requin_mange(t_ocean ocean, t_noeud* poisson)
 {
+	void* ptr_temp = NULL;
 	t_noeud* requin = NULL; //ptr du requin qui mange 
-	//t_info_adj* info_adj = case_adj_vides(ocean, poisson->info->posx, poisson->info->posy);//poisson qui se fait manger
-	int pos_x_r = poisson->info->posx;
-	int pos_y_r = poisson->info->posy;
 	int manger = 0;
 	
-	for (int i = 0;i < 2;i++)
+	// Observe dans un carré 9x9 autour du poisson
+	for (int dy = -1; dy <= 1; dy++)
 	{
-		for (int j = 0;j < 2;j++)
+		for (int dx = -1; dx <= 1; dx++)
 		{
-			if (i != 1 && j != 1) //ne regarde jamais la case du milieu
+			if (dx != 0 || dy != 0) //toutes les cases sauf celle du milieu qui est tjrs pleine
 			{
-				/*
-				if (info_adj->case_adj[i][j] == REQUIN) //si il y a un requin adj
+				// 
+				int case_wREQUIN_x = (poisson->info->posx + dx + LARGEUR_OCEAN) % LARGEUR_OCEAN;
+				int case_wREQUIN_y = (poisson->info->posy + dy + HAUTEUR_OCEAN) % HAUTEUR_OCEAN;
+
+				if (get_contenu_case(ocean, case_wREQUIN_x, case_wREQUIN_y) == REQUIN)
 				{
-					requin = (t_noeud*)ocean[pos_y_r][pos_x_r].animal;
+					requin = (t_noeud*)get_ptrAnimal_case(ocean, case_wREQUIN_x, case_wREQUIN_y, ptr_temp);
 					requin->info->energie_sante++;
-					manger = 1;
+					manger++;
 					break;
-				}*/
+				}
 			}
 		}
 	}
-
 	return manger; // 0 se fait pas manger, 1 c'est fait manger.
 }
-
 
 void afficher_liste(t_liste* liste) {
 	if (!liste || !liste->tete) {

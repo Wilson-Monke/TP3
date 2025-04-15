@@ -25,16 +25,16 @@ t_contenu get_contenu_case(t_ocean ocean, int x, int y)
 	return ocean[y][x].contenu;
 }
 
-int get_ptrAnimal_case(t_ocean ocean, int x, int y, void* ptrAnimal)
+void* get_ptrAnimal_case(t_ocean ocean, int x, int y, void* ptrAnimal)
 {
 	if (x < 0 || x >= LARGEUR_OCEAN || y < 0 || y >= LARGEUR_OCEAN) return 0;
 
 	if (ocean[y][x].animal != NULL)
 	{
 		ptrAnimal = ocean[y][x].animal;
-		return 1;
+		return ptrAnimal;
 	}
-	return 0;
+	return NULL;
 }
 
 int nvx_contenu_ptr(t_ocean ocean, int posx, int posy, void* nv_ptr, t_contenu nv_ctn)
@@ -71,7 +71,7 @@ static int nb_case_adj_vide(t_ocean ocean, int posx, int posy)
 {
 	int nbCasesVides = 0;
 
-	// Itère dans un carré 9x9
+	// Observe dans un carré 9x9 autour de la case de l'animal
 	for (int dy = -1; dy <= 1; dy++)
 	{
 		for (int dx = -1; dx <= 1; dx++)
@@ -181,6 +181,9 @@ void print_poissons(t_ocean ocean) {
 		for (int x = 0; x < LARGEUR_OCEAN; x++) {
 			if (ocean[y][x].contenu == POISSON) {
 				printf("POISSON at [%d][%d] : animal = %p\n",
+					y, x, ocean[y][x].animal);
+			}else if (ocean[y][x].contenu == POISSON) {
+				printf("REQUIN at [%d][%d] : animal = %p\n",
 					y, x, ocean[y][x].animal);
 			}
 		}

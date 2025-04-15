@@ -43,33 +43,44 @@ void init_liste_r(t_liste* liste_r, t_ocean ocean, int nb_r_vlu)
 	}
 }
 
+
 int deplace_requin(t_noeud* requin, t_ocean ocean)
 {
-	/*
+	int posxActuelle = requin->info->posx;
+	int posyActuelle = requin->info->posy;
+
 	if (requin == NULL)
 	{
 		printf("Erreur animal invalide");
 		return NULL;
 	}
-	effacer_contenu(ocean, requin->info->posx, requin->info->posy);
-	t_info_adj* info_adj = case_adj_vides(ocean, requin->info->posx, requin->info->posy);	//fonction qui observe les cases autour du requin et retourne si elles sont pleines
-	//cette fonction determine aussi une direction & une case possibles pour un element ainsi on peut directement faire:
-	if (info_adj->plein != 1)								//si les cases adj ne sont pas pleines
+
+	t_location_case_vide nouvelle_case = get_rand_case_vide(ocean, posxActuelle, posyActuelle);
+
+	if (nouvelle_case.invalide != 1)
 	{
-		requin->info->posx = info_adj->n_x;				//ecrit les coords de la case disponible
-		requin->info->posy = info_adj->n_y;
+		// Déplace le requin à la nouvelle case
+		nvx_contenu_ptr(ocean, nouvelle_case.posx, nouvelle_case.posy, requin, REQUIN);
+		printf("\n\nPoisson ajouté dans une nouvelle case[%i][%i]\n", nouvelle_case.posy, nouvelle_case.posx);
+		print_poissons(ocean);
+		//Modifier les infos du requin
+		requin->info->posx = nouvelle_case.posx;
+		requin->info->posy = nouvelle_case.posy;
+
+		// Efface le requin de l'ancienne case
+		effacer_contenu(ocean, posxActuelle, posyActuelle);
+		printf("\n\nPoisson deleter [%i][%i]\n", posyActuelle, posxActuelle);
+		print_poissons(ocean);
 	}
 
-	ocean[requin->info->posy][requin->info->posx].contenu = REQUIN; //met le requin a sa nouvelle position ou sa position intiale
-	ocean[requin->info->posy][requin->info->posx].animal = requin;
-	
-	*/
 	return 1;
 }
 
-int ajout_bb_r(t_liste* liste, t_ocean ocean, t_noeud* r_parent)
+int ajout_bb_requin(t_liste* liste, t_ocean ocean, t_noeud* r_parent)
 {
-	/*
+	int posxActuelle = r_parent->info->posx;
+	int posyActuelle = r_parent->info->posy;
+
 	if (liste == NULL)
 	{
 		printf("Erreur liste invalide");
@@ -81,28 +92,25 @@ int ajout_bb_r(t_liste* liste, t_ocean ocean, t_noeud* r_parent)
 		return NULL;
 	}
 
-	t_info_adj* info_adj = case_adj_vides(ocean, r_parent->info->posx, r_parent->info->posy);//fonction qui observe les cases autour du requin et retourne si elles sont pleines
-	//cette fonction determine aussi une direction & une case possibles pour un element ainsi on peut directement faire:
+	t_location_case_vide nouvelle_case = get_rand_case_vide(ocean, posxActuelle, posyActuelle);
 
 
-	if (info_adj->plein == 0) //case_adj pas pleines 
+	if (nouvelle_case.invalide != 1) // si case_adj pas pleines 
 	{
-		ocean[info_adj->n_y][info_adj->n_x].animal = ajout_animal(liste, info_adj->n_x, info_adj->n_y, 0, ENERGIE_DIGESTION, 0);		//ajoute le nouveau requin a la fin de la liste
-		ocean[info_adj->n_y][info_adj->n_x].contenu = REQUIN;							//place le nouveau requin dans l'ocean
+		ocean[nouvelle_case.posy][nouvelle_case.posx].animal = ajout_animal(liste, nouvelle_case.posx, nouvelle_case.posy, 0, ENERGIE_DIGESTION, 0);	//ajoute le nouveau requin a la fin de la liste
+		ocean[nouvelle_case.posy][nouvelle_case.posx].contenu = REQUIN;							//place le nouveau requin dans l'ocean
 		r_parent->info->energie_sante--;												//decrem energie du requin_parent
-		r_parent->info->jrs_gest = (NB_JRS_GEST_REQUIN);									//reinit jrs_gest requin_parent
+		r_parent->info->jrs_gest = -(NB_JRS_GEST_REQUIN);									//reinit jrs_gest requin_parent
 	}
 	else
 	{
-		r_parent->info->jrs_gest = (NB_JRS_GEST_REQUIN);									//reinit jrs_gest requin_parent
-		return NULL;//operation n'a pas fonctionne
+		r_parent->info->jrs_gest = -(NB_JRS_GEST_REQUIN);
+		return NULL;//operation n'a pas fonctionne mais jrs_gest est reinit
 	}
-	
-	*/
+
+
 	return 1; //operation est completee normalement
-
 }
-
 
 void retirer_requin(t_liste* liste, t_ocean ocean) {
 
