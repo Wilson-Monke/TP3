@@ -45,7 +45,7 @@ void init_liste_r(t_liste* liste_r, t_ocean ocean, int nb_r_vlu)
 }
 
 
-int deplace_requin(t_noeud* requin, t_ocean ocean)
+int deplace_requin(t_noeud* requin, t_ocean ocean, int mode)
 {
 	int posxActuelle = requin->info->posx;
 	int posyActuelle = requin->info->posy;
@@ -61,7 +61,7 @@ int deplace_requin(t_noeud* requin, t_ocean ocean)
 	if (nouvelle_case.invalide != 1)
 	{
 		// Déplace le requin à la nouvelle case
-		nvx_contenu_ptr(ocean, nouvelle_case.posx, nouvelle_case.posy, requin, REQUIN);
+		nvx_contenu_ptr(ocean, nouvelle_case.posx, nouvelle_case.posy, requin, REQUIN, mode);
 
 		//print_poissons(ocean);
 		// 
@@ -70,7 +70,7 @@ int deplace_requin(t_noeud* requin, t_ocean ocean)
 		requin->info->posy = nouvelle_case.posy;
 
 		// Efface le requin de l'ancienne case
-		effacer_contenu(ocean, posxActuelle, posyActuelle);
+		effacer_contenu(ocean, posxActuelle, posyActuelle, mode);
 
 		//print_poissons(ocean);
 	}
@@ -114,9 +114,9 @@ int ajout_bb_requin(t_liste* liste, t_ocean ocean, t_noeud* r_parent)
 	return 1; //operation est completee normalement
 }
 
-void retirer_requin(t_liste* liste, t_ocean ocean) {
+void retirer_requin(t_liste* liste, t_ocean ocean, int mode) {
 
-	effacer_contenu(ocean, liste->courant->info->posx, liste->courant->info->posy);
+	effacer_contenu(ocean, liste->courant->info->posx, liste->courant->info->posy, mode);
 	retire_noeud(liste);
 }
 

@@ -21,7 +21,7 @@ void init_liste_p(t_liste* liste_p, t_ocean ocean, int nb_p_vlu);//ocean
 	Retourne 1 si l'op�ration foncitonne sinon retourne 0
 */
 
-int deplace_poisson(t_noeud* poisson, t_ocean ocean);
+int deplace_poisson(t_noeud* poisson, t_ocean ocean, int mode);
 
 /*
 	Ajoute un nouveau b�b�-poisson � la liste dans une case vide de l'oc�an
@@ -32,7 +32,7 @@ int ajout_bb_poisson(t_liste* liste, t_ocean ocean, t_noeud* p_parent);
 /*
 	Retire un poisson de la liste_poisson & vide sa case attribu�e de l'oc�an
 */
-void retirer_poisson(t_liste* liste, t_ocean ocean);
+void retirer_poisson(t_liste* liste, t_ocean ocean, int mode);
 
 
 

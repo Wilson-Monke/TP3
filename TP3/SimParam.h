@@ -1,5 +1,14 @@
 ﻿#pragma once
 
+#define MODE_GRAPHIQUE	1
+#define MODE_ECRI_FICH	0
+#define MAX_ITER 5000
+
+// Paramètres animaux
+#define NB_ANIMAUX_VLU	500
+#define POURCENTAGE_POISSON 0.8
+#define POURCCENTAGE_REQUIN 0.2
+
 // Paramètres POISSON
 #define MAX_POISSON 1000		//nombre maximal de poissons avant la surpopulation
 #define MAX_AGE_POISSON 150		//age maximal du poisson

@@ -1,6 +1,5 @@
 #include "poisson.h"
 
-
 /******************************************************************************/
 /*  POISSON.CPP                                                                 */
 /*  Module utilitaire qui permet de maintenir la liste des poissons vivants   */
@@ -32,7 +31,7 @@ void init_liste_p(t_liste* liste_p,t_ocean ocean, int nb_p_vlu)
 	}
 }
 
-int deplace_poisson(t_noeud* poisson,t_ocean ocean)
+int deplace_poisson(t_noeud* poisson,t_ocean ocean, int mode)
 {
 	int posxActuelle = poisson->info->posx;
 	int posyActuelle = poisson->info->posy;
@@ -48,14 +47,14 @@ int deplace_poisson(t_noeud* poisson,t_ocean ocean)
 	if (nouvelle_case.invalide != 1)
 	{
 		// Déplace le poisson à la nouvelle case
-		nvx_contenu_ptr(ocean, nouvelle_case.posx, nouvelle_case.posy, poisson, POISSON);
+		nvx_contenu_ptr(ocean, nouvelle_case.posx, nouvelle_case.posy, poisson, POISSON, mode);
 
 		//Modifier les infos du poisson
 		poisson->info->posx = nouvelle_case.posx;
 		poisson->info->posy = nouvelle_case.posy;
 
 		// Efface le poisson de l'ancienne case
-		effacer_contenu(ocean, posxActuelle, posyActuelle);
+		effacer_contenu(ocean, posxActuelle, posyActuelle, mode);
 	}
 	
 	return 1;
@@ -99,9 +98,9 @@ int ajout_bb_poisson(t_liste* liste, t_ocean ocean, t_noeud* p_parent)
 }
 
 
-void retirer_poisson(t_liste* liste, t_ocean ocean) {
+void retirer_poisson(t_liste* liste, t_ocean ocean, int mode) {
 
-	effacer_contenu(ocean, liste->courant->info->posx, liste->courant->info->posy);
+	effacer_contenu(ocean, liste->courant->info->posx, liste->courant->info->posy, mode);
 	retire_noeud(liste);
 }
 

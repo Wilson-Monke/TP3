@@ -23,7 +23,7 @@ void init_liste_r(t_liste* liste_p, t_ocean ocean, int nb_r_vlu);//ocean
 	Retourne 1 si l'op�ration foncitonne sinon retourne 0
 */
 
-int deplace_requin(t_noeud* requin, t_ocean ocean);
+int deplace_requin(t_noeud* requin, t_ocean ocean, int mode);
 
 /*
 	Ajoute un nouveau b�b�-requin � la liste dans une case vide de l'oc�an
@@ -34,6 +34,6 @@ int ajout_bb_requin(t_liste* liste, t_ocean ocean, t_noeud* r_parent);
 /*
 	Retire un requin de la liste_requin & vide sa case attribu�e de l'oc�an
 */
-void retirer_requin(t_liste* liste, t_ocean ocean);
+void retirer_requin(t_liste* liste, t_ocean ocean, int mode);
 
 

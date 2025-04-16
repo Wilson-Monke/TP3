@@ -37,34 +37,40 @@ void* get_ptrAnimal_case(t_ocean ocean, int x, int y, void* ptrAnimal)
 	return NULL;
 }
 
-int nvx_contenu_ptr(t_ocean ocean, int posx, int posy, void* nv_ptr, t_contenu nv_ctn)
+int nvx_contenu_ptr(t_ocean ocean, int posx, int posy, void* nv_ptr, t_contenu nv_ctn, int mode)
 {
 	if (posx < 0 || posx >= LARGEUR_OCEAN || posy < 0 || posy >= LARGEUR_OCEAN) return 0;
 
 	ocean[posy][posx].contenu = nv_ctn;
 	ocean[posy][posx].animal = nv_ptr;
 
-	if (nv_ctn == POISSON)
+	if (mode == MODE_GRAPHIQUE)
 	{
-		afficher_case(posy, posx, HAUTEUR_OCEAN, LARGEUR_OCEAN, COULEUR_POISSON);
+		if (nv_ctn == POISSON)
+		{
+			afficher_case(posy, posx, HAUTEUR_OCEAN, LARGEUR_OCEAN, COULEUR_POISSON);
+		}
+		else if (nv_ctn == REQUIN)
+		{
+			afficher_case(posy, posx, HAUTEUR_OCEAN, LARGEUR_OCEAN, COULEUR_REQUIN);
+		}
 	}
-	else if (nv_ctn == REQUIN)
-	{
-		afficher_case(posy, posx, HAUTEUR_OCEAN, LARGEUR_OCEAN, COULEUR_REQUIN);
-	}
+	
 
 	return 1;
 }
 
-int effacer_contenu(t_ocean ocean, int posx, int posy)
+int effacer_contenu(t_ocean ocean, int posx, int posy, int mode)
 {
 	ocean[posy][posx].contenu = VIDE;
 	ocean[posy][posx].animal = NULL;
 
-	afficher_case(posy, posx, HAUTEUR_OCEAN, LARGEUR_OCEAN, COULEUR_VIDE); 
+	if (mode == MODE_GRAPHIQUE)
+	{
+		afficher_case(posy, posx, HAUTEUR_OCEAN, LARGEUR_OCEAN, COULEUR_VIDE);
+	}
 
 	return 1;
-
 }
 
 static int nb_case_adj_vide(t_ocean ocean, int posx, int posy)
@@ -87,10 +93,6 @@ static int nb_case_adj_vide(t_ocean ocean, int posx, int posy)
 					{
 						nbCasesVides++;
 					}
-				}
-				else if (caseVide_y >= 0 && caseVide_y < HAUTEUR_OCEAN && nbCasesVides == 8)
-				{
-					printf("On a pas trouver de cases vide autour de [%i][%i] ! A valider", posy,posx);
 				}
 			}
 		}

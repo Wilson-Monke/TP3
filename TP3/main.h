@@ -7,17 +7,10 @@
 /****************************************************************************/
 #include "requin.h"
 #include "poisson.h"
+#include "SimParam.h"
 
 
-#define MODE_GRAPHIQUE	1
-#define MODE_ECRI_FICH	0
 #define TOUCHE_ESC		27
-#define NB_ANIMAUX_VLU	500	
-
-
-#define POURCENTAGE_POISSON 0.8
-#define POURCCENTAGE_REQUIN 0.2
-
 
 // Couleurs
 #define COULEUR_ROUGE       12
@@ -25,10 +18,12 @@
 #define COULEUR_VIOLET		13
 #define COULEUR_DEFAUT      7   //BLANC
 
+
 typedef struct
 {
 	int nb_poisson;
 	int nb_requin;
+	int temps;
 }t_stats;
 
 
