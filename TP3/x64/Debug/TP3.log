@@ -1,6 +1,26 @@
+<<<<<<< HEAD
 ﻿  Main.cpp
   ocean.cpp
   poisson.cpp
   requin.cpp
   Generating Code...
   TP3.vcxproj -> C:\Users\antho\source\repos\Wilson-Monke\TP3\x64\Debug\TP3.exe
+=======
+﻿  animal.cpp
+  Liste.cpp
+  Main.cpp
+  ocean.cpp
+  poisson.cpp
+  requin.cpp
+  util.cpp
+C:\Users\PC\source\repos\Wilson-Monke\TP3\TP3\util.cpp(15,13): warning C4244: 'argument' : conversion de 'time_t' en 'unsigned int', perte possible de données
+  utilitaire_affichage.cpp
+  winBGIm.cpp
+C:\Users\PC\source\repos\Wilson-Monke\TP3\TP3\winBGIm.cpp(1008,39): warning C4267: 'argument' : conversion de 'size_t' en 'int', perte possible de données
+C:\Users\PC\source\repos\Wilson-Monke\TP3\TP3\winBGIm.cpp(1011,42): warning C4267: 'argument' : conversion de 'size_t' en 'int', perte possible de données
+C:\Users\PC\source\repos\Wilson-Monke\TP3\TP3\winBGIm.cpp(1041,45): warning C4267: 'argument' : conversion de 'size_t' en 'int', perte possible de données
+C:\Users\PC\source\repos\Wilson-Monke\TP3\TP3\winBGIm.cpp(1050,45): warning C4267: 'argument' : conversion de 'size_t' en 'int', perte possible de données
+C:\Users\PC\source\repos\Wilson-Monke\TP3\TP3\winBGIm.cpp(1716,20): warning C4101: 'actualBits' : variable locale non référencée
+  Génération de code en cours...
+  TP3.vcxproj -> C:\Users\PC\Source\Repos\Wilson-Monke\TP3\x64\Debug\TP3.exe
+>>>>>>> Test

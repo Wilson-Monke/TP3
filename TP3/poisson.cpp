@@ -86,6 +86,7 @@ int ajout_bb_poisson(t_liste* liste, t_ocean ocean, t_noeud* p_parent)
 		ocean[nouvelle_case.posy][nouvelle_case.posx].contenu = POISSON;							//place le nouveau poisson dans l'ocean
 		p_parent->info->energie_sante--;												//decrem energie du poisson_parent
 		p_parent->info->jrs_gest = -(NB_JRS_GEST_POISSON);									//reinit jrs_gest poisson_parent
+		p_parent->info->nb_max++;														//increm nb accouchements du poisson
 	}
 	else
 	{
