@@ -19,7 +19,11 @@ typedef struct animal {
 	int   age;            //son age (en jours)
 	int   energie_sante;  //le niveau d'�nergie 
 	int   jrs_gest;       //nombre de jours en gestation
+<<<<<<< HEAD
 	int   nb_max;		  //nbr de gestations max ou nbr de jours de jeune max
+=======
+	int   nb_accouch;     //nombre de gestations déjà faites
+>>>>>>> c44d32300d24187752d2f86164f55f89513eb27d
 } t_animal;
 
 

@@ -8,55 +8,46 @@
 
 
 int main(void)
-{	
-	FILE* fichier_stats = NULL;
-
-	// Déclaration types
-	t_stats stats;
+{
+	init_alea();
+	
 	t_ocean* ocean = (t_ocean*)calloc(HAUTEUR_OCEAN,sizeof(t_ocean)); //on initialise 60 rangées à contenu=VIDE & animal=0x000000
 	t_liste* liste_requin = init_liste();
 	t_liste* liste_poisson = init_liste();
-	
-	// Déclarations variables
+	t_stats stats;			//stats durant les iterations
+	t_stats stats_init;		//stats initiales
+
 	int mode = MODE_GRAPHIQUE;
 	int sortieBoucle = 0;
 	int iteration = 0;
-	char saisieUtilisateur = '0';
 
-	// Initialisations
-	init_alea();
-	init_liste_p(liste_poisson, *ocean, NB_POISSON_DEPART);
-	init_liste_r(liste_requin, *ocean, NB_REQUIN_DEPART);
+	stats_init.nb_poisson = NB_ANIMAUX_VLU * POURCENTAGE_POISSON;
+	stats_init.nb_requin = NB_ANIMAUX_VLU * POURCCENTAGE_REQUIN;
+
+	init_liste_p(liste_poisson, *ocean, stats_init.nb_poisson);
+	init_liste_r(liste_requin, *ocean, stats_init.nb_requin);
 
 	stats.nb_poisson = nb_animaux(liste_poisson);
 	stats.nb_requin = nb_animaux(liste_requin);
-	stats.temps = 0;
 
-	
-	// Init affichage / mode texte
-	while(saisieUtilisateur != 'o' || saisieUtilisateur != 'n')
+
+	printf("Voulez-vous avec affichage? (O)ui/(N)on");
+	/*
+	while(mode != MODE_GRAPHIQUE || mode != MODE_ECRI_FICH)
 	{
-		printf("Voulez-vous avec affichage? (O)ui/(N)on: ");
-		scanf("%c", &saisieUtilisateur);
+		scanf(%c, &saisieUtilisateur);
 
-		if(tolower(saisieUtilisateur) == 'o')
+		if(to_lower(saisieUtilisateur) == 'o')
 		{
-			printf("\nMode Graphique selectionne\n");
-			mode = MODE_GRAPHIQUE;
-			break;
-		}else if(tolower(saisieUtilisateur) == 'n')
+			printf("\n Mode Graphique selectionné");
+		}else if(to_lower(saisieUtilisateur) == 'n')
 		{
-			printf("\nMode sauvegarde fichier selectionne\n");
-			mode = MODE_ECRI_FICH;
-			break;
-		}
-		else 
-		{
-			system("cls");
-			printf("Saisie invalide, veuiller ressayer.\n\n");
+			printf("\n Mode Graphique selectionné");
 		}
 	}
+	*/
 	printf("\n");
+
 
 	if (mode == MODE_GRAPHIQUE)
 	{	
@@ -64,21 +55,10 @@ int main(void)
 		init_zone_environnement(HAUTEUR_OCEAN, LARGEUR_OCEAN);
 		dessiner_ocean(*ocean);
 	}
-	else 
+
+	while (!sortieBoucle || (iteration <= 5000))//On répète la boucle tant qu’il reste des poissons et des requins OU qu’un nombre maximal d’itérations n’est pas atteint(eg. 5000) OU que l’utilisateur n’a pas arrêté la simulation(avec la touche <ESC>)
 	{
-		fichier_stats = fopen("stats.dat", "w");
-		if (fichier_stats == NULL) 
-		{
-			perror("\nCréation du fichier echouer!\n");
-			return EXIT_FAILURE;
-		}
-	}
-
-
-	// Algorithme principale
-
-	while (!sortieBoucle)//On répète la boucle tant qu’il reste des poissons et des requins OU qu’un nombre maximal d’itérations n’est pas atteint(eg. 5000) OU que l’utilisateur n’a pas arrêté la simulation(avec la touche <ESC>)
-	{
+		
 		algorithme(*ocean, liste_poisson, liste_requin, iteration, mode);
 
 		//enregistre les nouvelles info des listes
@@ -94,7 +74,7 @@ int main(void)
 				{
 					fermer_mode_graphique();
 					printf("\nTouche ESC appuyer, sortie du mode d'affichage graphique.\n");
-					sortieBoucle = 1;
+					sortieBoucle;
 				}
 			}
 
@@ -104,19 +84,24 @@ int main(void)
 			{
 				fermer_mode_graphique();
 				printf("\nNombre de poisson minimal atteint, sortie du mode d'affichage graphique.\n");
-				sortieBoucle = 1;
+				sortieBoucle;
 			}
 			if (stats.nb_requin == 0)
 			{
 				fermer_mode_graphique();
 				printf("\nNombre de requin minimal atteint, sortie du mode d'affichage graphique.\n");
-				sortieBoucle = 1;
+				sortieBoucle;
 			}
 
 			delai_ecran(100);//delais de 0.1 sec pour observer les elements
 		}
-		else // Mode fichier texte
+		/*
+		else // Mode fichier texte 
 		{
+		
+<<<<<<< HEAD
+			// log from t_stats
+=======
 			// log t_stats dans fichier .dat
 			fprintf(fichier_stats, "%-3d %-4d %-3d\n", stats.temps, stats.nb_poisson, stats.nb_requin);
 
@@ -137,13 +122,13 @@ int main(void)
 				
 				fclose(fichier_stats);
 				printf("\nStatistiques enregistrer dans stats.dat.\n");
-				system("start excel.exe SimGraph.xlsm");
 				sortieBoucle = 1;
 			}
+>>>>>>> parent of a4024c6 (Smol changes)
 		}
 		
+		*/
 		iteration++;
-		stats.temps++;
 	}
 
 	free_liste(liste_poisson);
@@ -154,7 +139,6 @@ int main(void)
 	return EXIT_SUCCESS;
 }
 
-
 static void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_requin, int temps, int mode)
 {
 	//identifie & supprime les poissons mangées ou trop vieux
@@ -164,6 +148,7 @@ static void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_req
 	for (int i = 0;i < nbPoissons;i++)
 	{
 
+<<<<<<< HEAD
 		// Ici on devrait pas faire un grand OU plutot comme pour les requins?
 		// Se fait manger par un requin ?
 		if (requin_mange(ocean, liste_poisson->courant))
@@ -176,19 +161,32 @@ static void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_req
 		{
 			// Oui
 			retirer_poisson(liste_poisson, ocean, mode);
+=======
+
+		// Se fait manger par un requin
+		if (requin_mange(ocean, liste_poisson->courant))
+		{
+			retirer_poisson(liste_poisson, ocean);
+		}
+		// Meurt apres 3eme accouchement?
+		else if (liste_poisson->courant->info->nb_accouch >= MAX_ACCOUCH_POISSON) //si nb_accouch = 3 le poisson a deja eu 3 accouchements donc on le supprime
+		{
+			// Oui
+			retirer_poisson(liste_poisson, ocean);
+>>>>>>> c44d32300d24187752d2f86164f55f89513eb27d
 		}
 		// Est-ce qu'il meurt de vieilleisse?
 		else if (liste_poisson->courant->info->age > MAX_AGE_POISSON) //fonction indicatrice qui supprime les poissons ayant 
 		{
 			// Oui
-			retirer_poisson(liste_poisson, ocean, mode);
+			retirer_poisson(liste_poisson, ocean);
 		}
-		int effacer_contenu(t_ocean ocean, int posx, int posy, int mode);
+		
 		prochain_noeud(liste_poisson); //Prochain poisson dans la liste
 	}
 
-
 	//identifie & supprime requins trop vieux ou morts de faim
+
 	courant_tete_liste(liste_requin);
 	int nbRequins = nb_animaux(liste_requin);
 
@@ -196,11 +194,10 @@ static void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_req
 	{
 		if (liste_requin->courant->info->nb_max > MAX_JRS_JEUNE || liste_requin->courant->info->age > MAX_AGE_REQUIN || liste_requin->courant->info->energie_sante <= 0)
 		{
-			retirer_requin(liste_requin, ocean, mode);
+			retirer_requin(liste_requin, ocean);
 		}
 		prochain_noeud(liste_requin);
 	}
-
 
 	// On traite tous les poisson
 	courant_tete_liste(liste_poisson);
@@ -208,30 +205,27 @@ static void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_req
 
 	for (int k = 0;k < nbPoissons;k++)
 	{
-		if (liste_poisson->courant->info->jrs_gest >= NB_JRS_GEST_POISSON) // Atteint jours de gestation
+		if (liste_poisson->courant->info->jrs_gest >= NB_JRS_GEST_POISSON)
 		{
 			ajout_bb_poisson(liste_poisson, ocean, liste_poisson->courant);
 		}
-		else // Sinon on le déplace
+		else
 		{
-			deplace_poisson(liste_poisson->courant, ocean, mode);
-
-			// Augmente jours de gestation si atteint la puberté
-			// Et si le poisson vient pas tout juste d'accoucher 
-			if (liste_poisson->courant->info->age >= NB_JRS_PUB_POISSON)
-			{
-				liste_poisson->courant->info->jrs_gest++;
-			}
+			deplace_poisson(liste_poisson->courant, ocean);
+			
 		}
-		
-		// Incrémente l'age peut-importe le cas
+		if (liste_poisson->courant->info->age >= NB_JRS_PUB_POISSON) 
+		{
+			liste_poisson->courant->info->jrs_gest++;
+		}
 		liste_poisson->courant->info->age++;
-
 		prochain_noeud(liste_poisson);
 	}
 	
 
 	//identifie puis deplace ou genere un nouveau requin
+
+
 	courant_tete_liste(liste_requin);
 	nbRequins = nb_animaux(liste_requin);
 
@@ -243,7 +237,7 @@ static void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_req
 		}
 		else
 		{
-			deplace_requin(liste_requin->courant, ocean, mode);
+			deplace_requin(liste_requin->courant, ocean);
 		}
 		if (liste_requin->courant->info->age >= NB_JRS_PUB_REQUIN)
 			liste_requin->courant->info->jrs_gest++;
@@ -270,11 +264,13 @@ static int requin_mange(t_ocean ocean, t_noeud* poisson)
 		{
 			if (dx != 0 || dy != 0) //toutes les cases sauf celle du milieu qui est tjrs pleine
 			{
-				int case_wREQUIN_x = (poisson->info->posx + dx + LARGEUR_OCEAN) % LARGEUR_OCEAN;// Évite le débordement en largeur
-				int case_wREQUIN_y = poisson->info->posy + dy;
+				// 
+				int case_wREQUIN_x = (poisson->info->posx + dx + LARGEUR_OCEAN) % LARGEUR_OCEAN;
+				int case_wREQUIN_y = (poisson->info->posy + dy + HAUTEUR_OCEAN) % HAUTEUR_OCEAN;
 
-				if (case_wREQUIN_y >= 0 && case_wREQUIN_y < HAUTEUR_OCEAN)				// Évite le débordement en y (poisson ne peut pas voler au dessus de l'océan, et ne peut pas creuser dans le sol)
+				if (get_contenu_case(ocean, case_wREQUIN_x, case_wREQUIN_y) == REQUIN)
 				{
+<<<<<<< HEAD
 					if (get_contenu_case(ocean, case_wREQUIN_x, case_wREQUIN_y) == REQUIN)
 					{
 						requin = (t_noeud*)get_ptrAnimal_case(ocean, case_wREQUIN_x, case_wREQUIN_y, ptr_temp);
@@ -283,6 +279,12 @@ static int requin_mange(t_ocean ocean, t_noeud* poisson)
 						manger++;
 						break;
 					}
+=======
+					requin = (t_noeud*)get_ptrAnimal_case(ocean, case_wREQUIN_x, case_wREQUIN_y, ptr_temp);
+					requin->info->energie_sante++;
+					manger++;
+					break;
+>>>>>>> c44d32300d24187752d2f86164f55f89513eb27d
 				}
 			}
 		}

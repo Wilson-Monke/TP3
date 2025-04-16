@@ -80,5 +80,11 @@
     <ClInclude Include="Liste.h">
       <Filter>Header Files\src</Filter>
     </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>Header Files\src</Filter>
+    </ClInclude>
+    <ClInclude Include="SimParam.h">
+      <Filter>Header Files\src</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

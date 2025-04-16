@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  animal.cpp
   Liste.cpp
   Main.cpp
@@ -13,5 +14,14 @@ C:\Users\PC\source\repos\Wilson-Monke\TP3\TP3\winBGIm.cpp(1011,42): warning C426
 C:\Users\PC\source\repos\Wilson-Monke\TP3\TP3\winBGIm.cpp(1041,45): warning C4267: 'argument' : conversion de 'size_t' en 'int', perte possible de données
 C:\Users\PC\source\repos\Wilson-Monke\TP3\TP3\winBGIm.cpp(1050,45): warning C4267: 'argument' : conversion de 'size_t' en 'int', perte possible de données
 C:\Users\PC\source\repos\Wilson-Monke\TP3\TP3\winBGIm.cpp(1716,20): warning C4101: 'actualBits' : variable locale non référencée
+=======
+﻿  Main.cpp
+C:\Users\PC\source\repos\Wilson-Monke\TP3\TP3\SimParam.h(18,9): warning C4005: 'NB_JRS_GEST_POISSON' : redéfinition de macro
+C:\Users\PC\source\repos\Wilson-Monke\TP3\TP3\SimParam.h(24,9): warning C4005: 'NB_JRS_PUB_REQUIN' : redéfinition de macro
+C:\Users\PC\source\repos\Wilson-Monke\TP3\TP3\SimParam.h(25,9): warning C4005: 'NB_JRS_GEST_REQUIN' : redéfinition de macro
+C:\Users\PC\source\repos\Wilson-Monke\TP3\TP3\Main.cpp(24,41): warning C4244: '=' : conversion de 'double' en 'int', perte possible de données
+C:\Users\PC\source\repos\Wilson-Monke\TP3\TP3\Main.cpp(25,40): warning C4244: '=' : conversion de 'double' en 'int', perte possible de données
+  poisson.cpp
+>>>>>>> c44d32300d24187752d2f86164f55f89513eb27d
   Génération de code en cours...
   TP3.vcxproj -> C:\Users\PC\Source\Repos\Wilson-Monke\TP3\x64\Debug\TP3.exe
