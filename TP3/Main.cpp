@@ -163,9 +163,18 @@ static void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_req
 	
 	for (int i = 0;i < nbPoissons;i++)
 	{
-		// Se fait manger par un requin
+
+		// Ici on devrait pas faire un grand OU plutot comme pour les requins?
+		// Se fait manger par un requin ?
 		if (requin_mange(ocean, liste_poisson->courant))
 		{
+			//Oui
+			retirer_poisson(liste_poisson, ocean, mode);
+		}
+		// Meurt car deja 3 accouchements?
+		else if (liste_poisson->courant->info->nb_max >= MAX_ACCOUCH_POISSON) //fonction indicatrice qui supprime les poissons ayant 
+		{
+			// Oui
 			retirer_poisson(liste_poisson, ocean, mode);
 		}
 		// Est-ce qu'il meurt de vieilleisse?
@@ -185,7 +194,7 @@ static void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_req
 
 	for (int j = 0; j < nbRequins; j++)
 	{
-		if (liste_requin->courant->info->age > MAX_AGE_REQUIN || liste_requin->courant->info->energie_sante <= 0)
+		if (liste_requin->courant->info->nb_max > MAX_JRS_JEUNE || liste_requin->courant->info->age > MAX_AGE_REQUIN || liste_requin->courant->info->energie_sante <= 0)
 		{
 			retirer_requin(liste_requin, ocean, mode);
 		}
@@ -240,6 +249,7 @@ static void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_req
 			liste_requin->courant->info->jrs_gest++;
 
 		liste_requin->courant->info->age++; //incremente age peu importe
+		liste_requin->courant->info->nb_max++; //incremente nb de jours sans manger
 
 		prochain_noeud(liste_requin);
 	}
@@ -269,6 +279,7 @@ static int requin_mange(t_ocean ocean, t_noeud* poisson)
 					{
 						requin = (t_noeud*)get_ptrAnimal_case(ocean, case_wREQUIN_x, case_wREQUIN_y, ptr_temp);
 						requin->info->energie_sante++;
+						requin->info->nb_max=0; //reinit le nb de jours sans manger
 						manger++;
 						break;
 					}

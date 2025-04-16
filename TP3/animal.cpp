@@ -20,6 +20,7 @@ void init_animal(t_animal* animal, int px, int py, int age, int energie, int ges
 	animal->age = age;
 	animal->energie_sante = energie;
 	animal->jrs_gest = gest;
+	animal->nb_max = 0;			//init avec 0 accouchements ou 0 jours de jeune
 }
 
 
