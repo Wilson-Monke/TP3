@@ -19,7 +19,8 @@ void init_animal(t_animal* animal, int px, int py, int age, int energie, int ges
 	animal->posy = py;
 	animal->age = age;
 	animal->energie_sante = energie;
-	animal->jrs_gest = gest;
+	animal->jrs_gest = gest; 
+	animal->nb_accouch = 0; //valeur speciale pour les poissons, ceux-ci meurent apres 3 accouchements
 }
 
 

@@ -1,1 +1,9 @@
-﻿  TP3.vcxproj -> C:\Users\antho\source\repos\Wilson-Monke\TP3\x64\Debug\TP3.exe
+﻿  Main.cpp
+C:\Users\PC\source\repos\Wilson-Monke\TP3\TP3\SimParam.h(18,9): warning C4005: 'NB_JRS_GEST_POISSON' : redéfinition de macro
+C:\Users\PC\source\repos\Wilson-Monke\TP3\TP3\SimParam.h(24,9): warning C4005: 'NB_JRS_PUB_REQUIN' : redéfinition de macro
+C:\Users\PC\source\repos\Wilson-Monke\TP3\TP3\SimParam.h(25,9): warning C4005: 'NB_JRS_GEST_REQUIN' : redéfinition de macro
+C:\Users\PC\source\repos\Wilson-Monke\TP3\TP3\Main.cpp(24,41): warning C4244: '=' : conversion de 'double' en 'int', perte possible de données
+C:\Users\PC\source\repos\Wilson-Monke\TP3\TP3\Main.cpp(25,40): warning C4244: '=' : conversion de 'double' en 'int', perte possible de données
+  poisson.cpp
+  Génération de code en cours...
+  TP3.vcxproj -> C:\Users\PC\Source\Repos\Wilson-Monke\TP3\x64\Debug\TP3.exe

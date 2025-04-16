@@ -6,7 +6,6 @@
 
 #include "util.h"
 #include "utilitaire_affichage.h"
-#include "SimParam.h"
 
 #define HAUTEUR_OCEAN 60
 #define LARGEUR_OCEAN 120
@@ -43,9 +42,9 @@ t_contenu get_contenu_case(t_ocean ocean, int x, int y);
 
 void* get_ptrAnimal_case(t_ocean ocean, int x, int y, void* ptrAnimal);
 
-int nvx_contenu_ptr(t_ocean ocean, int posx, int posy, void* nv_ptr, t_contenu nv_ctn, int mode);
+int nvx_contenu_ptr(t_ocean ocean, int posx, int posy, void* nv_ptr, t_contenu nv_ctn);
 
-int effacer_contenu(t_ocean ocean, int posx, int posy, int mode);
+int effacer_contenu(t_ocean ocean, int posx, int posy);
 
 void dessiner_ocean(t_ocean ocean);
 

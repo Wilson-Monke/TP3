@@ -1,12 +1,25 @@
-﻿#pragma once
+﻿
+#include "ocean.h"
+#include "Liste.h"
+//#include "ocean.h"
+
+
 /******************************************************************************/
 /*  POISSON.H                                                                 */
 /*  Module utilitaire qui permet de maintenir la liste des poissons vivants   */
 /*  Conception : Lucas Log�                                                   */
 /******************************************************************************/
-#include "ocean.h"
-#include "Liste.h"
-#include "SimParam.h"
+#if !defined (LIB_POISSON)
+#define LIB_POISSON 1
+
+#define MAX_POISSON 1000			//nombre maximal de poissons avant la surpopulation
+#define MAX_AGE_POISSON 150			//�ge maximal du poisson
+#define NB_JRS_PUB_POISSON 30		//nombre de jours avant la pubert�
+#define NB_JRS_GEST_POISSON 30		//nombre de jours de gestation
+#define ENERGIE_INIT_POISSON 3		//valeur initiale d'�nergie
+#define MAX_ACCOUCH_POISSON 3		//nombre de gestation possibles
+
+
 
 /*
 Re�oit la liste de poissons, l'ocean, nb de poissons voulu et g�n�re autant de poissons
@@ -21,7 +34,7 @@ void init_liste_p(t_liste* liste_p, t_ocean ocean, int nb_p_vlu);//ocean
 	Retourne 1 si l'op�ration foncitonne sinon retourne 0
 */
 
-int deplace_poisson(t_noeud* poisson, t_ocean ocean, int mode);
+int deplace_poisson(t_noeud* poisson, t_ocean ocean);
 
 /*
 	Ajoute un nouveau b�b�-poisson � la liste dans une case vide de l'oc�an
@@ -32,7 +45,8 @@ int ajout_bb_poisson(t_liste* liste, t_ocean ocean, t_noeud* p_parent);
 /*
 	Retire un poisson de la liste_poisson & vide sa case attribu�e de l'oc�an
 */
-void retirer_poisson(t_liste* liste, t_ocean ocean, int mode);
+void retirer_poisson(t_liste* liste, t_ocean ocean);
 
 
 
+#endif

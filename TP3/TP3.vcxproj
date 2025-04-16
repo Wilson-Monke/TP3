@@ -142,6 +142,7 @@
   <ItemGroup>
     <ClInclude Include="animal.h" />
     <ClInclude Include="Liste.h" />
+    <ClInclude Include="main.h" />
     <ClInclude Include="ocean.h" />
     <ClInclude Include="poisson.h" />
     <ClInclude Include="requin.h" />
