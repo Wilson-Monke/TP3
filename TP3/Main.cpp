@@ -25,8 +25,8 @@ int main(void)
 
 	// Initialisations
 	init_alea();
-	init_liste_p(liste_poisson, *ocean, NB_ANIMAUX_VLU * POURCENTAGE_POISSON);
-	init_liste_r(liste_requin, *ocean, NB_ANIMAUX_VLU * POURCCENTAGE_REQUIN);
+	init_liste_p(liste_poisson, *ocean, NB_POISSON_DEPART);
+	init_liste_r(liste_requin, *ocean, NB_REQUIN_DEPART);
 
 	stats.nb_poisson = nb_animaux(liste_poisson);
 	stats.nb_requin = nb_animaux(liste_requin);
