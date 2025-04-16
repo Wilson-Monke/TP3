@@ -20,6 +20,7 @@ int main(void)
 	int mode = MODE_GRAPHIQUE;
 	int sortieBoucle = 0;
 	int iteration = 0;
+	char saisieUtilisateur = '0';
 
 	stats_init.nb_poisson = NB_ANIMAUX_VLU * POURCENTAGE_POISSON;
 	stats_init.nb_requin = NB_ANIMAUX_VLU * POURCCENTAGE_REQUIN;
@@ -31,21 +32,23 @@ int main(void)
 	stats.nb_requin = nb_animaux(liste_requin);
 
 
-	printf("Voulez-vous avec affichage? (O)ui/(N)on");
-	/*
-	while(mode != MODE_GRAPHIQUE || mode != MODE_ECRI_FICH)
-	{
-		scanf(%c, &saisieUtilisateur);
+	printf("Voulez-vous avec affichage? (O)ui/(N)on: ");
+	
 
-		if(to_lower(saisieUtilisateur) == 'o')
+	while(saisieUtilisateur != 'o' || saisieUtilisateur != 'n')
+	{
+		scanf("%c", &saisieUtilisateur);
+
+		if(tolower(saisieUtilisateur) == 'o')
 		{
 			printf("\n Mode Graphique selectionné");
-		}else if(to_lower(saisieUtilisateur) == 'n')
+			break;
+		}else if(tolower(saisieUtilisateur) == 'n')
 		{
 			printf("\n Mode Graphique selectionné");
 		}
 	}
-	*/
+	
 	printf("\n");
 
 
@@ -93,13 +96,13 @@ int main(void)
 				sortieBoucle;
 			}
 
-			delai_ecran(500);//delais de 0.1 sec pour observer les elements
+			delai_ecran(1000);//delais de 0.1 sec pour observer les elements
 		}
 		else // Mode fichier texte
 		{
 			// log from t_stats
 		}
-
+		
 		
 		iteration++;
 	}

@@ -1,23 +1,14 @@
 ﻿#pragma once
 
-#include "ocean.h"
-#include "Liste.h"
-//#include "ocean.h"
-
-
 /******************************************************************************/
 /*  requin.H                                                                 */
 /*  Module utilitaire qui permet de maintenir la liste des requins vivants   */
 /*  Conception : Lucas Log�                                                   */
 /******************************************************************************/
-#if !defined (LIB_REQUIN)
-#define LIB_REQUIN 1
+#include "ocean.h"
+#include "Liste.h"
+#include "SimParam.h" // Paramètres de simulations
 
-
-#define MAX_AGE_REQUIN 1500 //�ge maximal du requin
-#define NB_JRS_PUB_REQUIN 90 //nombre de jours avant la pubert�
-#define NB_JRS_GEST_REQUIN 30 //nombre de jours de gestation
-#define ENERGIE_DIGESTION 10 //valeur ajout�e � l'indice d��nergie apr�s un repas
 
 /*
 Re�oit la liste de requins, l'ocean, nb de requins voulu et g�n�re autant de requins
@@ -46,4 +37,3 @@ int ajout_bb_requin(t_liste* liste, t_ocean ocean, t_noeud* r_parent);
 void retirer_requin(t_liste* liste, t_ocean ocean);
 
 
-#endif

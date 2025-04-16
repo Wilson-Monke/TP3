@@ -1,4 +1,2 @@
-﻿  Main.cpp
-C:\Users\antho\source\repos\Wilson-Monke\TP3\TP3\Main.cpp(24,41): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\antho\source\repos\Wilson-Monke\TP3\TP3\Main.cpp(25,40): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+﻿  ocean.cpp
   TP3.vcxproj -> C:\Users\antho\source\repos\Wilson-Monke\TP3\x64\Debug\TP3.exe

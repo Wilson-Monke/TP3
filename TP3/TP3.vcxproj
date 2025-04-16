@@ -145,6 +145,7 @@
     <ClInclude Include="ocean.h" />
     <ClInclude Include="poisson.h" />
     <ClInclude Include="requin.h" />
+    <ClInclude Include="SimParam.h" />
     <ClInclude Include="util.h" />
     <ClInclude Include="utilitaire_affichage.h" />
     <ClInclude Include="winBGIm.h" />

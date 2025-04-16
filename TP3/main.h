@@ -1,4 +1,5 @@
 ﻿#pragma once
+#define _CRT_SECURE_NO_WARNINGS
 /****************************************************************************/
 /*  main.h																	*/
 /*  Fichier d'en t�te de l'algorithme										*/
@@ -8,12 +9,12 @@
 #include "poisson.h"
 
 
-#define _CRT_SECURE_NO_WARNINGS
-
 #define MODE_GRAPHIQUE	1
 #define MODE_ECRI_FICH	0
 #define TOUCHE_ESC		27
 #define NB_ANIMAUX_VLU	500	
+
+
 #define POURCENTAGE_POISSON 0.8
 #define POURCCENTAGE_REQUIN 0.2
 

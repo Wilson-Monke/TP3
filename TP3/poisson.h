@@ -1,24 +1,12 @@
-﻿
-#include "ocean.h"
-#include "Liste.h"
-//#include "ocean.h"
-
-
+﻿#pragma once
 /******************************************************************************/
 /*  POISSON.H                                                                 */
 /*  Module utilitaire qui permet de maintenir la liste des poissons vivants   */
 /*  Conception : Lucas Log�                                                   */
 /******************************************************************************/
-#if !defined (LIB_POISSON)
-#define LIB_POISSON 1
-
-#define MAX_POISSON 1000 //nombre maximal de poissons avant la surpopulation
-#define MAX_AGE_POISSON 150 //�ge maximal du poisson
-#define NB_JRS_PUB_POISSON 30 //nombre de jours avant la pubert�
-#define NB_JRS_GEST_POISSON 15 //nombre de jours de gestation
-#define ENERGIE_INIT_POISSON 3 //valeur initiale d'�nergie
-
-
+#include "ocean.h"
+#include "Liste.h"
+#include "SimParam.h"
 
 /*
 Re�oit la liste de poissons, l'ocean, nb de poissons voulu et g�n�re autant de poissons
@@ -48,4 +36,3 @@ void retirer_poisson(t_liste* liste, t_ocean ocean);
 
 
 
-#endif
