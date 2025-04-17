@@ -106,6 +106,8 @@ t_location_case_vide get_rand_case_vide(t_ocean ocean, int posx, int posy)
 {
 	t_location_case_vide case_vide;
 	case_vide.invalide = 1;	// Invalide par défaut
+	case_vide.posx = 999;
+	case_vide.posy = 999;
 
 	int nbCaseVide = nb_case_adj_vide(ocean, posx, posy);
 	int caseChoisi = alea(0, nbCaseVide); // Case choisi aléatoirement dans ceux qui sont dispo et valide

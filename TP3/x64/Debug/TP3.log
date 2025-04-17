@@ -1,18 +1,1 @@
-﻿  animal.cpp
-  Liste.cpp
-  Main.cpp
-  ocean.cpp
-  poisson.cpp
-  requin.cpp
-  util.cpp
-C:\Users\antho\source\repos\Wilson-Monke\TP3\TP3\util.cpp(15,13): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  utilitaire_affichage.cpp
-  winBGIm.cpp
-C:\Users\antho\source\repos\Wilson-Monke\TP3\TP3\winBGIm.cpp(1008,39): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\antho\source\repos\Wilson-Monke\TP3\TP3\winBGIm.cpp(1011,42): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\antho\source\repos\Wilson-Monke\TP3\TP3\winBGIm.cpp(1041,45): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\antho\source\repos\Wilson-Monke\TP3\TP3\winBGIm.cpp(1050,45): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\antho\source\repos\Wilson-Monke\TP3\TP3\winBGIm.cpp(1716,20): warning C4101: 'actualBits': unreferenced local variable
-  Generating Code...
-  LINK : C:\Users\antho\source\repos\Wilson-Monke\TP3\x64\Debug\TP3.exe not found or not built by the last incremental link; performing full link
-  TP3.vcxproj -> C:\Users\antho\source\repos\Wilson-Monke\TP3\x64\Debug\TP3.exe
+﻿  TP3.vcxproj -> C:\Users\antho\source\repos\Wilson-Monke\TP3\x64\Debug\TP3.exe
