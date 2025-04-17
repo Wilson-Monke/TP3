@@ -137,6 +137,7 @@ int main(void)
 				
 				fclose(fichier_stats);
 				printf("\nStatistiques enregistrer dans stats.dat.\n");
+				system("start excel.exe SimGraph.xlsm");
 				sortieBoucle = 1;
 			}
 		}
