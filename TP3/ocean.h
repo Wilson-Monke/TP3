@@ -10,17 +10,20 @@
 
 #define HAUTEUR_OCEAN 60
 #define LARGEUR_OCEAN 120
+#define MAX_DIRECTIONS 8  // Maximum number of directions in your enum
 
-typedef enum { HAUT, HAUT_D, DROITE, BAS_D, BAS, BAS_G, GAUCHE, HAUT_G } t_direction;
+
+typedef enum { HAUT_G, HAUT, HAUT_D, GAUCHE, DROITE, BAS_D, BAS, BAS_G} t_direction;
 
 // Enumeration pour une case de l'oc�an
-typedef enum { VIDE, POISSON, REQUIN } t_contenu;
+typedef enum { VIDE, POISSON, REQUIN , INVALIDE} t_contenu;
 
 // Structure qui represente une case de l'ocean
 typedef struct {
 	t_contenu contenu; // VIDE, POISSON ou REQUIN
 	void* animal;      // Pointeur générique a un animal a cette case, sinon NULL
 } t_case;
+
 
 // Taleau 2d qui contient des case(contenu et pointeur vers l'animal)
 typedef t_case t_ocean[HAUTEUR_OCEAN][LARGEUR_OCEAN];

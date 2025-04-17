@@ -20,7 +20,7 @@ void vider_ocean(t_ocean ocean)
 
 t_contenu get_contenu_case(t_ocean ocean, int x, int y)
 {
-	if (x < 0 || x >= LARGEUR_OCEAN || y < 0 || y >= LARGEUR_OCEAN) return VIDE;
+	if (x < 0 || x >= LARGEUR_OCEAN || y < 0 || y >= LARGEUR_OCEAN) return INVALIDE;
 
 	return ocean[y][x].contenu;
 }
@@ -76,8 +76,9 @@ int effacer_contenu(t_ocean ocean, int posx, int posy, int mode)
 static int nb_case_adj_vide(t_ocean ocean, int posx, int posy)
 {
 	int nbCasesVides = 0;
+	int conteurDir = 0;
 
-	// Observe dans un carré 9x9 autour de la case de l'animal
+	// Observe dans un carré 3x3 autour de la case de l'animal
 	for (int dy = -1; dy <= 1; dy++)
 	{
 		for (int dx = -1; dx <= 1; dx++)
@@ -106,29 +107,30 @@ t_location_case_vide get_rand_case_vide(t_ocean ocean, int posx, int posy)
 {
 	t_location_case_vide case_vide;
 	case_vide.invalide = 1;	// Invalide par défaut
-	case_vide.posx = 999;
-	case_vide.posy = 999;
+	case_vide.posx = 30; //Rendre evidant si un accumulation au centre
+	case_vide.posy = 60;
 
 	int nbCaseVide = nb_case_adj_vide(ocean, posx, posy);
-	int caseChoisi = alea(0, nbCaseVide); // Case choisi aléatoirement dans ceux qui sont dispo et valide
+	int caseChoisi = alea(0, nbCaseVide-1); // Case choisi aléatoirement dans ceux qui sont dispo et valide
 	int iteration = 0;
 
+	printf("\n\nnbCaseVide[%i] | caseChoisi[%i]: \n", nbCaseVide, caseChoisi);
 
 	if (nbCaseVide != 0) 
 	{
-		// Itère dans un carré 9x9
+		// Itère dans un carré 3x3
 		for (int dy = -1; dy <= 1; dy++)
 		{
 			for (int dx = -1; dx <= 1; dx++)
 			{
 				if (dx != 0 || dy != 0) //toutes les cases sauf celle du milieu qui est tjrs pleine
 				{
-					
 					int caseVide_x = (posx + dx + LARGEUR_OCEAN) % LARGEUR_OCEAN;	// Évite le débordement en x (poisson va se retrouver de l'autre côté)
 					int caseVide_y = posy + dy;
 
 					if (caseVide_y >= 0 && caseVide_y < HAUTEUR_OCEAN)				// Évite le débordement en y (poisson ne peut pas voler au dessus de l'océan, et ne peut pas creuser dans le sol)
 					{
+						printf("Iteration[%i] | Vide? [%i]\n", iteration, get_contenu_case(ocean, caseVide_x, caseVide_y));
 						// Case est vide et on est à la case choisi?
 						if (get_contenu_case(ocean, caseVide_x, caseVide_y) == VIDE && caseChoisi == iteration) 
 						{
@@ -146,6 +148,10 @@ t_location_case_vide get_rand_case_vide(t_ocean ocean, int posx, int posy)
 				}
 			}
 		}
+	}
+	else 
+	{
+		printf("here is ok");
 	}
 
 	return case_vide; //invalide
