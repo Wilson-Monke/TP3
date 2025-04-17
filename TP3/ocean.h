@@ -16,7 +16,8 @@
 typedef enum { HAUT_G, HAUT, HAUT_D, GAUCHE, DROITE, BAS_D, BAS, BAS_G} t_direction;
 
 // Enumeration pour une case de l'oc�an
-typedef enum { VIDE, POISSON, REQUIN , INVALIDE} t_contenu;
+typedef enum { VIDE, POISSON, REQUIN} t_contenu;
+
 
 // Structure qui represente une case de l'ocean
 typedef struct {
@@ -24,24 +25,21 @@ typedef struct {
 	void* animal;      // Pointeur générique a un animal a cette case, sinon NULL
 } t_case;
 
-
 // Taleau 2d qui contient des case(contenu et pointeur vers l'animal)
 typedef t_case t_ocean[HAUTEUR_OCEAN][LARGEUR_OCEAN];
 
 
 typedef struct {
-	int invalide;
-	int posy;
-	int posx;
+	int posx;     // coord x case vide
+	int posy;     // coord y case vide
+	int invalide; // 1 si invalide, 0 valide
 } t_location_case_vide;
-
 
 
 // Mettre toute les cases à contenu VIDE et animal NULLE
 void vider_ocean(t_ocean ocean);
 
-// Obtient le contenu d'une case à la position x y
-// Retourne une valeur t_contenu
+
 t_contenu get_contenu_case(t_ocean ocean, int x, int y);
 
 void* get_ptrAnimal_case(t_ocean ocean, int x, int y, void* ptrAnimal);
@@ -52,7 +50,7 @@ int effacer_contenu(t_ocean ocean, int posx, int posy, int mode);
 
 void dessiner_ocean(t_ocean ocean);
 
-static int nb_case_adj_vide(t_ocean ocean, int posx, int posy);
+static void case_adj_vide(t_ocean ocean, int posx, int posy, t_location_case_vide* vide_positions, int* nb_vide);
 
 t_location_case_vide get_rand_case_vide(t_ocean ocean, int posx, int posy);
 
