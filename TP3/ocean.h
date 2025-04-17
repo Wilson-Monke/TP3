@@ -16,8 +16,7 @@
 typedef enum { HAUT_G, HAUT, HAUT_D, GAUCHE, DROITE, BAS_D, BAS, BAS_G} t_direction;
 
 // Enumeration pour une case de l'oc�an
-typedef enum { VIDE, POISSON, REQUIN} t_contenu;
-
+typedef enum { VIDE, POISSON, REQUIN } t_contenu;
 
 // Structure qui represente une case de l'ocean
 typedef struct {

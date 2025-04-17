@@ -63,6 +63,7 @@ int main(void)
 		init_graphe(LARGEUR_OCEAN, HAUTEUR_OCEAN);
 		init_zone_environnement(HAUTEUR_OCEAN, LARGEUR_OCEAN);
 		dessiner_ocean(*ocean);
+		afficher_infos(iteration, nb_animaux(liste_poisson), nb_animaux(liste_requin));
 	}
 	else 
 	{

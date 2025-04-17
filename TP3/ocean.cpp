@@ -64,6 +64,7 @@ int effacer_contenu(t_ocean ocean, int posx, int posy, int mode)
 {
 	ocean[posy][posx].contenu = VIDE;
 	ocean[posy][posx].animal = NULL;
+	
 
 	if (mode == MODE_GRAPHIQUE)
 	{
@@ -94,6 +95,7 @@ static void case_adj_vide(t_ocean ocean, int posx, int posy, t_location_case_vid
 					{
 						vide_positions[*nb_vide].posx = caseVide_x;
 						vide_positions[*nb_vide].posy = caseVide_y;
+						vide_positions[*nb_vide].invalide = 0;
 						(*nb_vide)++;
 					}
 				}
@@ -109,11 +111,18 @@ t_location_case_vide get_rand_case_vide(t_ocean ocean, int posx, int posy)
 	int nb_vide = 0;
 	t_location_case_vide case_rand_vide;
 	
+	for (int i = 0; i < 8; i++)
+	{
+		positions_vide[i].invalide = 1;
+		positions_vide[i].posx = -1;
+		positions_vide[i].posy = -1;
+	}
+
 	case_adj_vide(ocean, posx, posy, positions_vide, &nb_vide);
 
 	if (nb_vide > 0)
 	{
-		int index_alea = alea(0, nb_vide);
+		int index_alea = alea(0, nb_vide-1);
 		case_rand_vide = positions_vide[index_alea];
 	}
 	else 

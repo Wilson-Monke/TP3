@@ -63,16 +63,12 @@ int deplace_requin(t_noeud* requin, t_ocean ocean, int mode)
 		// Déplace le requin à la nouvelle case
 		nvx_contenu_ptr(ocean, nouvelle_case.posx, nouvelle_case.posy, requin, REQUIN, mode);
 
-		//print_poissons(ocean);
-		// 
 		//Modifier les infos du requin
 		requin->info->posx = nouvelle_case.posx;
 		requin->info->posy = nouvelle_case.posy;
 
 		// Efface le requin de l'ancienne case
 		effacer_contenu(ocean, posxActuelle, posyActuelle, mode);
-
-		//print_poissons(ocean);
 	}
 
 	return 1;
