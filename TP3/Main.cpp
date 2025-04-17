@@ -173,7 +173,7 @@ static void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_req
 			retirer_poisson(liste_poisson, ocean, mode);
 		}
 		// Meurt car deja 3 accouchements?
-		else if (liste_poisson->courant->info->nb_max >= MAX_ACCOUCH_POISSON) //fonction indicatrice qui supprime les poissons ayant 
+		else if (liste_poisson->courant->info->nb_max > MAX_ACCOUCH_POISSON) //fonction indicatrice qui supprime les poissons ayant 
 		{
 			// Oui
 			retirer_poisson(liste_poisson, ocean, mode);
@@ -184,7 +184,7 @@ static void algorithme(t_ocean ocean, t_liste* liste_poisson, t_liste* liste_req
 			// Oui
 			retirer_poisson(liste_poisson, ocean, mode);
 		}
-		int effacer_contenu(t_ocean ocean, int posx, int posy, int mode);
+		
 		prochain_noeud(liste_poisson); //Prochain poisson dans la liste
 	}
 
@@ -264,7 +264,7 @@ static int requin_mange(t_ocean ocean, t_noeud* poisson)
 	t_noeud* requin = NULL; //ptr du requin qui mange 
 	int manger = 0;
 	
-	// Observe dans un carré 9x9 autour du poisson
+	// Observe dans un carré 3x3 autour du poisson
 	for (int dy = -1; dy <= 1; dy++)
 	{
 		for (int dx = -1; dx <= 1; dx++)

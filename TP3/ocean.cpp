@@ -1,6 +1,5 @@
 ﻿#include "ocean.h"
 
-
 #define COULEUR_POISSON BLUE
 #define COULEUR_REQUIN	RED
 #define COULEUR_VIDE BLACK
